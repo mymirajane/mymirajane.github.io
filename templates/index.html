@@ -1,41 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section aria-labelledby="intro-title">
-  <h1 id="intro-title">Hello, I’m {{ site.author }}.</h1>
-  <p class="intro">{{ site.bio }}</p>
+<section class="hero" aria-labelledby="intro-title">
+  <div class="kicker">personal archive · 2026</div>
+  <h1 id="intro-title">Ideas in progress,<br><em>kept in public.</em></h1>
+  <p class="hero-copy">{{ site.bio }}</p>
+  <div class="hero-signature">
+    <span><strong>Mirajane</strong> · visual question answering, language, small observations</span>
+    <span>更新中 · always in progress</span>
+  </div>
 </section>
 
-<section class="section" id="blog" aria-labelledby="blog-title">
-  <h2 id="blog-title">Recent Writing</h2>
+<section class="section" id="writing" aria-labelledby="writing-title">
+  <div class="section-heading"><span>01</span><h2 id="writing-title">Recent writing</h2><a href="#writing">Archive ↗</a></div>
   {% if recent_writing %}
-  <ul class="post-list">
+  <ol class="entry-list">
     {% for post in recent_writing %}
-    <li><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time><a href="/{{ post.slug }}/">{{ post.title }}</a></li>
+    <li class="entry">
+      <div class="entry-meta"><span class="type">{{ post.kind }}</span><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time></div>
+      <div><a class="entry-title" href="/{{ post.slug }}/">{{ post.title }}</a><p class="entry-description">{{ post.description }}</p></div>
+      <div class="entry-arrow" aria-hidden="true">↗</div>
+    </li>
     {% endfor %}
-  </ul>
+  </ol>
   {% else %}<p>No writing published yet.</p>{% endif %}
 </section>
 
-<section class="section" id="projects" aria-labelledby="projects-title">
-  <h2 id="projects-title">Projects</h2>
-  {% if site.projects %}
-  <ul class="project-list">
-    {% for project in site.projects %}
-    <li><a href="{{ project.url }}">{{ project.title }}</a><p>{{ project.description }}</p></li>
+<section class="section" id="notes" aria-labelledby="notes-title">
+  <div class="section-heading"><span>02</span><h2 id="notes-title">Notes & links</h2></div>
+  {% if notes %}
+  <ol class="entry-list">
+    {% for post in notes %}
+    <li class="entry">
+      <div class="entry-meta"><span class="type">{{ post.kind }}</span><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time></div>
+      <div><a class="entry-title" href="/{{ post.slug }}/">{{ post.title }}</a><p class="entry-description">{{ post.description }}</p></div>
+      <div class="entry-arrow" aria-hidden="true">↗</div>
+    </li>
     {% endfor %}
-  </ul>
-  {% else %}<p>Projects will appear here.</p>{% endif %}
+  </ol>
+  {% else %}<p>Notes will appear here.</p>{% endif %}
+  <div class="labels" aria-label="Topics">
+    <span class="label">visual language</span><span class="label">machine learning</span><span class="label">VQA</span><span class="label">reading notes</span>
+  </div>
 </section>
 
-<section class="section" id="notes" aria-labelledby="notes-title">
-  <h2 id="notes-title">Notes & links</h2>
-  {% if notes %}
-  <ul class="post-list">
-    {% for post in notes %}
-    <li><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time><a href="/{{ post.slug }}/">{{ post.title }}</a></li>
+<section class="section" id="projects" aria-labelledby="projects-title">
+  <div class="section-heading"><span>03</span><h2 id="projects-title">Small projects</h2></div>
+  {% if site.projects %}
+  <div class="shelf">
+    {% for project in site.projects %}
+    <div class="shelf-item"><a href="{{ project.url }}">{{ project.title }} ↗</a><p>{{ project.description }}</p></div>
     {% endfor %}
-  </ul>
-  {% else %}<p>Notes will appear here.</p>{% endif %}
+    <div class="shelf-item"><a href="/feed.xml">Reading feed ↗</a><p>A quiet RSS feed for new writing and notes.</p></div>
+  </div>
+  {% endif %}
 </section>
 {% endblock %}

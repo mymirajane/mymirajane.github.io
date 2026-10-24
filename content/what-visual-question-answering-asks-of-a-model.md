@@ -4,6 +4,7 @@ date: 2026-10-25
 draft: false
 slug: what-visual-question-answering-asks-of-a-model
 type: writing
+tags: "VQA, introduction"
 description: "An introduction to VQA, from image and question encoders to the problem of language shortcuts."
 ---
 Visual Question Answering (VQA) starts with two inputs: an image and a question about it. The system must return an answer grounded in what the image actually shows. It sounds simple until a question requires the model to identify an object, understand the wording, and connect the two.

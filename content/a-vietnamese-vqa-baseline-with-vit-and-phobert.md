@@ -4,6 +4,7 @@ date: 2026-10-25
 draft: false
 slug: a-vietnamese-vqa-baseline-with-vit-and-phobert
 type: writing
+tags: "VQA, Vietnamese, experiment"
 description: "How I combined frozen image and language encoders, and what the training results revealed."
 ---
 For the implementation section of my VQA report, I built a baseline that combines a Vision Transformer for images with [PhoBERT](https://huggingface.co/vinai/phobert-base) for Vietnamese questions. The point of this experiment was to see how much a relatively small trainable fusion and classification head could learn from pretrained features.

@@ -58,6 +58,8 @@ class Post:
     kind: str
     description: str
     html: str
+    tags: tuple[str, ...]
+    reading_minutes: int
     source: Path
 
     @property
@@ -145,7 +147,10 @@ def load_posts() -> list[Post]:
             raise ValueError(f"{path}: type must be writing, note, or link")
         description = meta.get("description", "").strip() or title
         html = markdown.markdown(body, extensions=["extra", "sane_lists"])
-        posts.append(Post(title, published, slug, kind, description, html, path))
+        tags = tuple(tag.strip() for tag in meta.get("tags", "").split(",") if tag.strip())
+        words = len(re.findall(r"\b\w+\b", body, flags=re.UNICODE))
+        reading_minutes = max(1, round(words / 220))
+        posts.append(Post(title, published, slug, kind, description, html, tags, reading_minutes, path))
     posts.sort(key=lambda post: (-post.date.toordinal(), post.slug))
     return posts
 

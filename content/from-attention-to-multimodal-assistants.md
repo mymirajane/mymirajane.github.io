@@ -4,6 +4,7 @@ date: 2026-10-25
 draft: false
 slug: from-attention-to-multimodal-assistants
 type: writing
+tags: "attention, architecture"
 description: "A short map of how VQA architectures moved from image grids toward richer image-language interaction."
 ---
 The history of visual question answering can be read as a series of attempts to connect the right words to the right parts of an image. My report compared several influential designs, and the progression is easier to understand when viewed through that one question.
