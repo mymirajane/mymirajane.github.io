@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section aria-labelledby="intro-title">
+  <h1 id="intro-title">Hello, I’m {{ site.author }}.</h1>
+  <p class="intro">{{ site.bio }}</p>
+</section>
+
+<section class="section" id="blog" aria-labelledby="blog-title">
+  <h2 id="blog-title">Recent Writing</h2>
+  {% if recent_writing %}
+  <ul class="post-list">
+    {% for post in recent_writing %}
+    <li><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time><a href="/{{ post.slug }}/">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% else %}<p>No writing published yet.</p>{% endif %}
+</section>
+
+<section class="section" id="projects" aria-labelledby="projects-title">
+  <h2 id="projects-title">Projects</h2>
+  {% if site.projects %}
+  <ul class="project-list">
+    {% for project in site.projects %}
+    <li><a href="{{ project.url }}">{{ project.title }}</a><p>{{ project.description }}</p></li>
+    {% endfor %}
+  </ul>
+  {% else %}<p>Projects will appear here.</p>{% endif %}
+</section>
+
+<section class="section" id="notes" aria-labelledby="notes-title">
+  <h2 id="notes-title">Notes & links</h2>
+  {% if notes %}
+  <ul class="post-list">
+    {% for post in notes %}
+    <li><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time><a href="/{{ post.slug }}/">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+  {% else %}<p>Notes will appear here.</p>{% endif %}
+</section>
+{% endblock %}

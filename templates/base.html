@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ description }}">
+  <link rel="canonical" href="{{ canonical }}">
+  <meta name="color-scheme" content="light dark">
+  <title>{% if page_title %}{{ page_title }} · {% endif %}{{ site.title }}</title>
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="/feed.xml">
+  <style>
+    :root { color-scheme: light dark; --bg: #fff; --text: #202124; --muted: #61656b; --line: #d9dce1; --link: #2455a4; }
+    * { box-sizing: border-box; }
+    html { font-size: 18px; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.7 Georgia, "Times New Roman", serif; }
+    .wrap { width: min(100% - 2.5rem, 760px); margin: 0 auto; }
+    a { color: var(--link); text-decoration: underline; text-underline-offset: 0.15em; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+    .skip { position: absolute; left: -9999px; }
+    .skip:focus { left: 1rem; top: 0.5rem; background: var(--bg); padding: 0.25rem; z-index: 2; }
+    header { border-bottom: 1px solid var(--line); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.15rem 0; }
+    .site-name { color: var(--text); font-size: 1.35rem; text-decoration: none; white-space: nowrap; }
+    nav { display: flex; flex-wrap: wrap; gap: 0.3rem 1.25rem; font-size: 0.86rem; }
+    nav a { color: var(--text); text-decoration: none; }
+    nav a:hover, nav a:focus-visible { color: var(--link); text-decoration: underline; }
+    main { padding: 2.6rem 0 4.5rem; min-height: 65vh; }
+    h1, h2, h3 { line-height: 1.25; font-weight: 500; }
+    h1 { font-size: 2.25rem; margin: 0 0 1rem; }
+    h2 { font-size: 1.45rem; margin: 2.6rem 0 0.75rem; }
+    h3 { font-size: 1.15rem; margin: 1.9rem 0 0.5rem; }
+    p { margin: 0 0 1.15rem; }
+    .intro { font-size: 1.08rem; }
+    .section { border-top: 1px solid var(--line); margin-top: 2.3rem; }
+    .post-list { list-style: none; padding: 0; margin: 0; }
+    .post-list li { display: grid; grid-template-columns: 7.7rem minmax(0, 1fr); gap: 0.7rem; margin: 0 0 0.8rem; }
+    time, .meta, .muted { color: var(--muted); font-size: 0.82rem; }
+    .project-list { list-style: none; padding: 0; margin: 0; }
+    .project-list li { margin-bottom: 1rem; }
+    .project-list p { margin: 0.1rem 0 0; color: var(--muted); font-size: 0.9rem; }
+    article .meta { margin: 0 0 1.8rem; }
+    article > h1 { margin-bottom: 0.3rem; }
+    .post-body p, .post-body ul, .post-body ol, .post-body blockquote { margin: 0 0 1.25rem; }
+    .post-body ul, .post-body ol { padding-left: 1.5rem; }
+    .post-body li { margin-bottom: 0.3rem; }
+    .post-body img { max-width: 100%; height: auto; }
+    blockquote { border-left: 2px solid var(--line); margin-left: 0; padding-left: 1.1rem; color: var(--muted); }
+    pre { overflow-x: auto; padding: 0.8rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: 0.8rem; }
+    code { font-size: 0.85em; }
+    .back { margin-top: 2.5rem; font-size: 0.9rem; }
+    footer { border-top: 1px solid var(--line); padding: 1.4rem 0 2rem; color: var(--muted); font-size: 0.8rem; }
+    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+    @media (max-width: 620px) {
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      nav { gap: 0.25rem 1rem; }
+      main { padding-top: 2rem; }
+      h1 { font-size: 1.9rem; }
+      .post-list li { display: block; margin-bottom: 1rem; }
+      .post-list time { display: block; }
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #121416; --text: #eceff2; --muted: #b5bcc5; --line: #41474d; --link: #91b6ff; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="wrap header-inner">
+      <a class="site-name" href="/">{{ site.title }}</a>
+      <nav aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/#blog">Blog</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#notes">Notes</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    {% block content %}
+    <article>
+      <h1>{{ post.title }}</h1>
+      <p class="meta"><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time> · {{ post.kind|capitalize }}</p>
+      <div class="post-body">{{ content|safe }}</div>
+      <p class="back"><a href="/#blog">← Back to the blog</a></p>
+    </article>
+    {% endblock %}
+  </main>
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© {{ year }} {{ site.author }}</span>
+      <div class="footer-links">
+        <a href="/feed.xml">RSS</a>
+        {% for link in site.social_links %}<a href="{{ link.url }}" rel="me">{{ link.name }}</a>{% endfor %}
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
