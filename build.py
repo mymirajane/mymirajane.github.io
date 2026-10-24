@@ -36,7 +36,9 @@ SITE = {
         "learned, and links worth keeping. I’m starting with visual question "
         "answering, where images and language meet."
     ),
-    "social_links": [],  # Example: {"name": "GitHub", "url": "https://github.com/you"}
+    "social_links": [
+        {"name": "GitHub", "url": "https://github.com/mymirajane/mymirajane.github.io"}
+    ],
     "projects": [
         {
             "title": "Visual Question Answering",
