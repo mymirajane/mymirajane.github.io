@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="room-heading"><div><h1 class="room-title">About this room</h1><span class="room-subtitle">profile · hello · welcome</span></div><span class="room-address">mymirajane.github.io/about/</span></div>
+<div class="about-note">
+  <div class="about-ascii"><pre>  .------.
+ /  hello \
+|  friend! |
+ \  .--.  /
+  '------'</pre></div>
+  <div><h2>Hi, I'm Mirajane.</h2><p>{{ site.bio }}</p><p>This mini-hompy is a public notebook for VQA reports, Bayesian ideas, mathematics, statistics, code, and links that deserve a second visit.</p><p class="about-links"><a href="/writing/">Read the writing →</a><br><a href="/notes/">Open the notes shelf →</a></p></div>
+</div>
+<h2>How to use the site</h2>
+<p>Choose <strong>Writing</strong> for longer technical posts, <strong>Notes</strong> for shorter observations and links, or return to <strong>Home</strong> for the latest five updates. Every post is written in Markdown and built into a clean static page.</p>
+<div class="chips"><a href="/">home</a><a href="/writing/">writing</a><a href="/notes/">notes</a><a href="/feed.xml">rss feed</a></div>
+{% endblock %}

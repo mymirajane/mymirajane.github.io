@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="room-heading"><div><h1 class="room-title">{{ section_title }}</h1><span class="room-subtitle">{{ section_kicker }}</span></div><span class="room-address">mymirajane.github.io/{{ section_slug }}/</span></div>
+<p class="section-intro">{{ section_intro }}</p>
+<div class="section-heading"><span>{{ section_title }}</span><small>{{ section_posts|length }} entries</small></div>
+<ul class="post-list section-post-list">
+{% for post in section_posts %}
+  <li class="post-row"><time datetime="{{ post.date.isoformat() }}"><b>{{ post.kind }}</b>{{ post.date_label }}</time><div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p>{% if post.tags %}<div class="chips">{% for tag in post.tags %}<a href="#tag-{{ tag|lower|replace(' ', '-') }}">#{{ tag }}</a>{% endfor %}</div>{% endif %}</div></li>
+{% else %}
+  <li class="post-row"><div><p>This room is waiting for its first entry.</p></div></li>
+{% endfor %}
+</ul>
+<div class="chips"><a href="/">← home</a><a href="/writing/">writing</a><a href="/notes/">notes</a><a href="/about/">about</a></div>
+{% endblock %}

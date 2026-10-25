@@ -2,17 +2,16 @@
 {% block content %}
 <div class="room-heading" id="about"><div><h1 class="room-title">{{ site.title }}</h1><span class="room-subtitle">welcome to my pink mini-hompy ☆</span></div><span class="room-address">mymirajane.github.io</span></div>
 
-<div class="section-heading"><span>Recent Updates</span><small>diary 5/14 · posts 9/18</small></div>
+<div class="section-heading"><span>Recent Updates</span><small>latest 5 entries · diary / board / links</small></div>
 <div class="updates" id="writing">
-  {% for post in writings[:3] %}
+  {% for post in recent_updates %}
   <div class="update"><b>{{ post.kind|upper }}</b><a href="/{{ post.slug }}/">{{ post.title }}</a><span>{{ post.date_label }}</span></div>
-  {% endfor %}
-  {% for post in notes[:1] %}
-  <div class="update"><b>NOTE</b><a href="/{{ post.slug }}/">{{ post.title }}</a><span>{{ post.date_label }}</span></div>
+  {% else %}
+  <div class="update"><b>NOTICE</b><span>the room is quiet</span></div>
   {% endfor %}
 </div>
 
-<div class="tabs-row"><a class="active" href="#minilife">Minilife</a> &nbsp;|&nbsp; <a href="#posts">Miniblog</a> &nbsp;|&nbsp; <a href="#notes">Storyroom</a></div>
+<div class="tabs-row"><a class="active" href="#minilife">Minilife</a> &nbsp;|&nbsp; <a href="/writing/">Miniblog</a> &nbsp;|&nbsp; <a href="/notes/">Storyroom</a></div>
 <figure class="minilife" id="minilife"><pre>╭──────────────────────────────────────────────╮
 │          MIRAJANE'S PINK STUDY ROOM          │
 │                                              │
@@ -26,23 +25,7 @@
 │       images + math + little uncertainties    │
 ╰──────────────────────────────────────────────╯</pre><figcaption>my minilife · a quiet room for reports, proofs, and links</figcaption></figure>
 
-<h2 id="posts">Recent writing</h2>
-<ul class="post-list">
-{% for post in writings %}
-  <li class="post-row"><time datetime="{{ post.date.isoformat() }}"><b>{{ post.kind }}</b>{{ post.date_label }}</time><div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div></li>
-{% else %}
-  <li class="post-row"><div><p>No writing yet. Add a Markdown file to <code>content/</code>.</p></div></li>
-{% endfor %}
-</ul>
-
-<h2 id="notes">Notes &amp; links</h2>
-<ul class="post-list">
-{% for post in notes %}
-  <li class="post-row"><time datetime="{{ post.date.isoformat() }}"><b>{{ post.kind }}</b>{{ post.date_label }}</time><div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div></li>
-{% else %}
-  <li class="post-row"><div><p>The storyroom is waiting for a new note.</p></div></li>
-{% endfor %}
-</ul>
-
-<div class="chips"><a href="#posts">all posts</a><a href="#notes">reading list</a><a href="/feed.xml">rss feed</a><a href="#about">profile</a></div>
+<h2>Open a room</h2>
+<div class="dashboard-links"><a href="/writing/"><b>Writing</b><span>technical diary, essays, and reports →</span></a><a href="/notes/"><b>Notes</b><span>short observations and saved links →</span></a><a href="/about/"><b>About</b><span>who keeps this little room →</span></a></div>
+<div class="chips"><a href="/writing/">all writing</a><a href="/notes/">reading list</a><a href="/feed.xml">rss feed</a><a href="/about/">profile</a></div>
 {% endblock %}

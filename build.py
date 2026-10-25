@@ -218,6 +218,8 @@ def build() -> None:
     )
     base = environment.get_template("base.html")
     index = environment.get_template("index.html")
+    listing = environment.get_template("listing.html")
+    about = environment.get_template("about.html")
     shared = {"site": SITE, "year": date.today().year}
     writings = [post for post in posts if post.kind == "writing"]
     notes = [post for post in posts if post.kind in {"note", "link"}]
@@ -231,6 +233,35 @@ def build() -> None:
             writings=writings,
             notes=notes,
             posts=posts,
+            recent_updates=posts[:5],
+        ),
+        Path("writing") / "index.html": listing.render(
+            **shared,
+            page_title="Writing",
+            description="Mirajane's technical writing about computer science, mathematics, and statistics.",
+            canonical=SITE["url"].rstrip("/") + "/writing/",
+            section_title="Writing",
+            section_slug="writing",
+            section_kicker="technical diary · essays · reports",
+            section_intro="Longer notes about models, mathematics, experiments, and the questions that keep me curious.",
+            section_posts=writings,
+        ),
+        Path("notes") / "index.html": listing.render(
+            **shared,
+            page_title="Notes",
+            description="Small notes and links from Mirajane's reading shelf.",
+            canonical=SITE["url"].rstrip("/") + "/notes/",
+            section_title="Notes & links",
+            section_slug="notes",
+            section_kicker="storyroom · reading shelf · useful corners",
+            section_intro="Short observations, references, and internet pages I want to keep close.",
+            section_posts=notes,
+        ),
+        Path("about") / "index.html": about.render(
+            **shared,
+            page_title="About",
+            description="About Mirajane and this small pink mini-hompy.",
+            canonical=SITE["url"].rstrip("/") + "/about/",
         ),
         Path("feed.xml"): rss_feed(posts),
         Path("sitemap.xml"): sitemap(posts),
