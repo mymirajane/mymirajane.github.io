@@ -155,7 +155,32 @@
       .retro-main h2 { background: #2f5b68; border-color: #4a7781; color: #e7f5f5; }
       .retro-button, .mini-link, .footer-links a, a { color: var(--blue); }
     }
-  </style>
+      /* Version 2 Cyworld-inspired shell */
+    body { background: repeating-linear-gradient(0deg, rgba(100,120,125,.07) 0, rgba(100,120,125,.07) 1px, transparent 1px, transparent 5px), linear-gradient(140deg,#e4e8e6,#cbd5d5 50%,#e9ebe8); font-family:"Trebuchet MS",Verdana,Arial,sans-serif; }
+    .retro-window { width:min(calc(100% - 1rem), 980px); margin:1.25rem auto; padding:1.1rem; border:1px solid #697477; border-radius:16px; background:#f7f8f5; box-shadow:0 12px 26px rgba(36,53,57,.23); }
+    .retro-window::before { content:""; position:absolute; inset:.55rem; border:2px dashed #9ca7a8; border-radius:13px; pointer-events:none; }
+    .window-chrome { position:relative; z-index:1; padding:.65rem 1.1rem .9rem; background:#f7f8f5; border:0; color:#6d7b80; }
+    .window-bar { padding-bottom:.25rem; border-bottom:1px solid #d1d5d2; }
+    .window-title { color:#176780; font-size:1.35rem; letter-spacing:.02em; }
+    .window-title::after { content:"  -  TODAY 1234  |  TOTAL 258267"; display:block; margin-top:.12rem; color:#d56576; font:.65rem "Courier New",monospace; letter-spacing:.08em; }
+    .window-actions { color:#829096; } .address-row { display:none; }
+    .window-body { position:relative; z-index:1; grid-template-columns:225px minmax(0,1fr) 86px; gap:1.1rem; padding:0 1.1rem 1rem; background:#f7f8f5; }
+    .left-rail { padding:.7rem; border:1px solid #c4cbca; border-radius:15px; background:#fffef9; box-shadow:inset 0 0 0 4px #f1f3f0; }
+    .avatar-box { margin:0 0 .55rem; border:0; border-bottom:1px solid #d5dcdc; border-radius:0; background:#fffef9; }
+    .profile-bio { color:#697a7f; } .placeholder-links { border-top:1px dotted #d1d5d2; padding-top:.5rem; }
+    .retro-button { border:0; border-bottom:1px solid #d1d5d2; border-radius:0; background:transparent; color:#63757a; box-shadow:none; }
+    .retro-button:hover { background:#e7f2f1; color:#d56576; } .profile-stats { border-top:1px dotted #d1d5d2; color:#7a888b; }
+    .retro-main { padding-top:.15rem; color:#40535b; } .retro-main h1 { color:#176780; font-size:1.25rem; }
+    .retro-main h2 { margin-top:1rem; padding:.3rem .55rem; border:1px solid #a9cbd2; border-radius:0; background:linear-gradient(#d8f1f5,#a9d8e3); color:#153e4c; font-size:.92rem; text-align:left; }
+    .welcome-banner { min-height:190px; margin:.35rem 0 .7rem; padding:.8rem; border:1px solid #c7d1cf; background:linear-gradient(135deg,#fefdf7,#e8f3f1); text-align:center; }
+    .welcome-banner::before { content:"Minilife  |  Miniblog  |  Storyroom"; display:block; margin:-.25rem 0 .4rem; color:#1987a4; font-size:.75rem; text-align:left; }
+    .welcome-banner .ascii-art { color:#6a8f9b; font-size:.66rem; }
+    .post-list { border-top:1px dotted #d1d5d2; } .post-row { padding:.4rem 0; border-bottom:1px dotted #d1d5d2; }
+    .post-row a { color:#176780; } .mini-links a { border:1px solid #bed0d0; background:#f9fdfb; color:#1987a4; }
+    .right-rail { padding-top:1.2rem; } .side-folder { display:block; text-decoration:none; border:1px solid #76a9b7; border-radius:4px; background:linear-gradient(#76c2d4,#338ba8); color:#fff; }
+    .side-folder .ascii-art { display:none; } .side-label { margin:0; color:#fff; font-size:.68rem; text-shadow:0 1px #2d6374; }
+    .now-playing { border:1px solid #c7d1cf; border-radius:4px; background:#e7f2f1; } .now-playing .ascii-art { color:#6a8f9b; }
+    .status-line { color:#7a888b; } footer { position:relative; z-index:1; border-top:1px solid #d0d5d1; background:#f7f8f5; color:#7f8c8f; }</style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -210,35 +235,24 @@
         {% endblock %}
       </main>
 
-      <aside class="rail right-rail" aria-label="Media shelf">
-        <div class="side-folder"><pre class="ascii-art">  _______
- /      /|
-+------+/ |
-|  /  |  |
-| /   |  |
-|/____| /
-+------+/</pre><div class="side-label">my writing</div></div>
-        <div class="side-folder"><pre class="ascii-art"> .------.
- | .--. |
- | |  | |
- | '--' |
- '------'</pre><div class="side-label">my links</div></div>
-        <div class="side-folder"><pre class="ascii-art">  .----.
- / .--. | | () | |
-  '--' /
-  '----'</pre><div class="side-label">my notes</div></div>
-        <div class="now-playing">
-          <pre class="ascii-art">+----------+
+      <aside class="rail right-rail" aria-label="Site navigation">
+  <a class="side-folder" href="/"><div class="side-label">홈<br><small>home</small></div></a>
+  <a class="side-folder" href="/#profile"><div class="side-label">프로필<br><small>profile</small></div></a>
+  <a class="side-folder" href="/#diary"><div class="side-label">다이어리<br><small>diary</small></div></a>
+  <a class="side-folder" href="/#projects"><div class="side-label">프로젝트<br><small>projects</small></div></a>
+  <a class="side-folder" href="/#gallery"><div class="side-label">갤러리<br><small>gallery</small></div></a>
+  <a class="side-folder" href="/#posts"><div class="side-label">게시판<br><small>posts</small></div></a>
+  <a class="side-folder" href="/#playlist"><div class="side-label">플레이리스트<br><small>playlist</small></div></a>
+  <a class="side-folder" href="/#guestbook"><div class="side-label">방명록<br><small>guestbook</small></div></a>
+  <div class="now-playing"><pre class="ascii-art">+----------+
 |  NOW     |
 | PLAYING  |
 | .------. |
-| | >  || |
+| | &gt;  || |
 | '------' |
-+----------+</pre>
-          <p>♪ image + question<br>01:42 / mirajane.fm</p>
-        </div>
-        <p class="status-line">♫ currently online<br>♡ thanks for visiting</p>
-      </aside>
++----------+</pre><p>♪ image + question<br>01:42 / mirajane.fm</p></div>
+  <p class="status-line">♫ currently online<br>♡ thanks for visiting</p>
+</aside>
     </div>
     <footer>
       <div class="footer-row">
@@ -249,3 +263,6 @@
   </div>
 </body>
 </html>
+
+
+

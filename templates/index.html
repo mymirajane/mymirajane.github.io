@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="retro-article">
+<section class="retro-article" id="home">
   <h1>welcome to my profile!!!</h1>
   <div class="welcome-banner">
     <pre class="ascii-art" aria-label="ASCII banner"> __  __ ___ ____    _    _   _ ___ _   _  ___
@@ -11,11 +11,11 @@
 |_|  |_|___|_| \_/_/   \_\_| \_|___|_| \_|\___/
                  field notes / 余白 / v1.0</pre>
   </div>
-  <h2>read this first</h2>
+  <h2 id="diary">read this first</h2>
   <p>Before following, I write about visual question answering, language, study notes and small observations. This is a public notebook: unfinished ideas can stay unfinished, and useful links can stay useful.</p>
   <p>My reports are adapted into shorter pieces here so they are easier to read, search and share.</p>
 
-  <h2>My VQA reports</h2>
+  <h2 id="projects">My VQA reports</h2>
   {% if recent_writing %}
   <ul class="post-list">
     {% for post in recent_writing %}
@@ -29,8 +29,8 @@
 
   <div class="mini-links" aria-label="Quick links">
     <a class="mini-link" href="#posts">all posts ↘</a>
-    <a class="mini-link" href="#placeholder-reading">reading list ↘</a>
-    <a class="mini-link" href="#placeholder-media">my media ↘</a>
+    <a class="mini-link" href="#gallery">reading list ↘</a>
+    <a class="mini-link" href="#playlist">my media ↘</a>
     <a class="mini-link" href="/feed.xml">RSS feed ↗</a>
   </div>
 
@@ -47,20 +47,24 @@
   {% endif %}
 
   <div class="home-lower">
-    <div class="lower-card" id="placeholder-reading">
+    <div class="lower-card" id="gallery">
       <pre class="ascii-art" aria-hidden="true"> .-.
 ( R )
  '-'</pre>
       <strong>reading / watching</strong>
       <p>placeholder shelf for papers, films and pages I want to remember.</p>
     </div>
-    <div class="lower-card" id="placeholder-media">
+    <div class="lower-card" id="playlist">
       <pre class="ascii-art" aria-hidden="true"> .--.
 ( &gt; )
  '--'</pre>
       <strong>now playing</strong>
       <p>placeholder for music, audio notes and the occasional loop.</p>
     </div>
+  </div>
+  <div class="lower-card" id="guestbook" style="margin-top:.6rem">
+    <strong>guestbook / 방명록</strong>
+    <p>A placeholder for kind notes from visitors. For now, the RSS feed and GitHub repo are the best way to leave a trace.</p>
   </div>
 </section>
 {% endblock %}
