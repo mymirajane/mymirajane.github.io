@@ -20,7 +20,24 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:var(--red)}a:focus-visibl
 .article h1{font-size:24px}.article .lede{color:#738386}.article-meta{display:flex;flex-wrap:wrap;gap:12px;padding:7px 0;border-block:1px dotted var(--line);color:#899799;font:10px "Courier New",monospace}.post-body{padding-top:9px}.post-body h2{margin-top:15px}.post-body img{max-width:100%;height:auto}.post-body blockquote{margin:10px 0;padding:5px 8px;border-left:3px solid var(--red);background:#fff4f3}.post-body pre{overflow:auto;padding:8px;border:1px solid var(--line);background:#f0f6f4;font-size:11px}.article-end{display:flex;justify-content:space-between;margin-top:16px;padding-top:8px;border-top:1px solid var(--line);font:11px "Courier New",monospace}
 @media(max-width:760px){.cy-grid{grid-template-columns:185px minmax(0,1fr) 76px;gap:9px;padding-inline:7px}.cy-url{display:none}.update{grid-template-columns:58px minmax(0,1fr)}.update span{display:none}}
 @media(max-width:600px){.cy-frame{width:calc(100% - 8px);margin:4px auto;padding:9px}.cy-grid{grid-template-columns:1fr}.profile{display:grid;grid-template-columns:112px minmax(0,1fr);gap:4px 9px}.today,.profile-links,.profile-foot{grid-column:1/-1}.avatar{grid-row:span 2;min-height:135px;margin:3px}.profile h1,.handle,.bio{text-align:left}.bio{margin-left:0}.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding-top:0}.nav a{padding:6px 2px}.now-playing{display:none}.lower{grid-template-columns:1fr}.cy-heading{align-items:start}.cy-title{font-size:19px}}
-</style>
+/* Version 2 layout polish */
+body{background-color:#aac2e1;background-image:linear-gradient(rgba(75,111,153,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(75,111,153,.22) 1px,transparent 1px);background-size:16px 16px}
+.cy-frame{width:min(calc(100% - 2rem),1040px);margin:2rem auto;padding:14px;border-radius:18px;background:#e9eef2;box-shadow:0 10px 22px rgba(46,70,96,.28)}
+.cy-frame:before{inset:7px;border-color:#8298b1}
+.cy-top{padding:8px 16px 14px}.counter{color:#647787}.cy-title{font-size:24px}.cy-url{font-size:11px}
+.cy-grid{grid-template-columns:204px minmax(0,1fr) 92px;gap:12px;padding:0 16px 14px}
+.profile{padding:10px;border-radius:12px;background:#fff;box-shadow:0 1px 4px rgba(65,85,92,.12)}
+.avatar{min-height:205px;margin:8px;border:1px solid #d2d9d9;background:#f7fbfb}.profile h1{font-size:24px}
+.center{padding:13px 15px 16px;border:1px solid #c9d2d2;border-radius:12px;background:#fff;box-shadow:0 1px 4px rgba(65,85,92,.1)}
+.center h1{margin:0 0 8px;font-size:19px}.section-head{display:flex;justify-content:space-between;gap:8px;padding:6px 0 4px;border-bottom:1px solid #cfd8d7;color:#27839a;font-size:13px;font-weight:700}.section-head span{color:#8c999b;font:10px "Courier New",monospace;font-weight:400}
+.updates{padding:5px 0 8px;border-top:0}.update{grid-template-columns:60px minmax(0,1fr) 92px;padding:5px 0}.update strong{color:#d4606d}.update a{color:#5d7076}
+.tabs{margin-top:11px;padding:5px 0 6px}.room{min-height:226px;margin-top:6px;padding:14px;background:linear-gradient(145deg,#fdfbf2,#dcecf2);box-shadow:inset 0 0 0 1px rgba(255,255,255,.7)}.room pre{font-size:12px;line-height:1.12}
+.center h2{margin:15px 0 5px;font-size:14px}.post{padding:5px 0}.post-row a{font-size:12px}.post p{font-size:10px}
+.nav{padding-top:4px}.nav a{padding:8px 2px;font-size:10px;border-color:#6e8fa2;background:linear-gradient(#90a8b6,#6f8897);text-shadow:none}.nav a:hover{background:linear-gradient(#e6949f,#c6566a)}
+.now-playing{background:#fff;padding:6px}
+.cy-footer{padding:10px 16px 2px}
+@media(max-width:760px){.cy-frame{width:calc(100% - 1rem);margin:1rem auto}.cy-grid{grid-template-columns:180px minmax(0,1fr) 75px;padding-inline:8px}.center{padding:10px}.room{min-height:185px}.room pre{font-size:10px}}
+@media(max-width:600px){.cy-frame{width:calc(100% - 6px);margin:3px auto;padding:8px}.cy-grid{grid-template-columns:1fr}.center{order:2}.profile{order:1}.nav{order:3}.room{min-height:0}.room pre{font-size:9px}.section-head{font-size:12px}}</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -62,3 +79,4 @@ a{color:var(--cyan);text-decoration:none}a:hover{color:var(--red)}a:focus-visibl
 </div>
 </body>
 </html>
+
