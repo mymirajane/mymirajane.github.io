@@ -1,7 +1,7 @@
-"""Build a small static blog from Markdown files.
+"""Build Mirajane's bubbly Markdown blog for GitHub Pages.
 
-Dependencies: Python 3.10+, Markdown, and Jinja2. Run `python build.py` from
-any directory; paths are resolved relative to this file.
+Markdown files in ``content/`` are the database, Jinja templates are the
+views, and ``public/`` is the deployable static site.
 """
 
 from __future__ import annotations
@@ -27,29 +27,17 @@ ASSETS = ROOT / "assets"
 PUBLIC = ROOT / "public"
 
 SITE = {
-    "title": "Mirajane",
+    "title": "Mirajane's tiny internet corner",
     "author": "Mirajane",
     "url": "https://mymirajane.github.io",
-    "description": "Writing, notes, and useful links from Mirajane.",
-    "bio": (
-        "I’m Mirajane. This is a home for ideas I’m working through, things I’ve "
-        "learned, and links worth keeping. I’m starting with visual question "
-        "answering, where images and language meet."
-    ),
+    "description": "Technical notes about computer science, mathematics, statistics, and the small joys around them.",
+    "bio": "I study computer science, math, and statistics. This is where I keep playful explanations, research notes, code, and links.",
     "social_links": [
-        {"name": "GitHub", "url": "https://github.com/mymirajane/mymirajane.github.io"}
-    ],
-    "projects": [
-        {
-            "title": "Visual Question Answering",
-            "description": (
-                "A study of how models connect images and questions, including a "
-                "Vietnamese ViT and PhoBERT baseline."
-            ),
-            "url": "/a-vietnamese-vqa-baseline-with-vit-and-phobert/",
-        }
+        {"name": "GitHub", "url": "https://github.com/mymirajane/mymirajane.github.io"},
     ],
 }
+
+MARKDOWN_EXTENSIONS = ["extra", "fenced_code", "tables", "sane_lists", "attr_list"]
 
 
 @dataclass(frozen=True)
@@ -70,7 +58,7 @@ class Post:
 
 
 def parse_scalar(raw: str, path: Path, line_number: int) -> str:
-    """Read the single-line YAML scalar subset used by this site."""
+    """Parse the small YAML scalar subset used by the blog."""
     value = raw.strip()
     if value.startswith('"'):
         try:
@@ -119,6 +107,17 @@ def slugify(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value).strip("-")
 
 
+def parse_tags(value: str) -> tuple[str, ...]:
+    """Accept ``tags: math, python`` and ``tags: [math, python]``."""
+    value = value.strip().strip("[]")
+    tags = []
+    for raw_tag in value.split(","):
+        tag = raw_tag.strip().strip('"\'')
+        if tag:
+            tags.append(tag)
+    return tuple(tags)
+
+
 def load_posts() -> list[Post]:
     if not CONTENT.is_dir():
         raise ValueError(f"Missing content directory: {CONTENT}")
@@ -126,10 +125,7 @@ def load_posts() -> list[Post]:
     seen_slugs: set[str] = set()
     for path in sorted(CONTENT.rglob("*.md")):
         meta, body = parse_frontmatter(path)
-        draft = meta.get("draft", "false").lower()
-        if draft not in {"true", "false"}:
-            raise ValueError(f"{path}: draft must be true or false")
-        if draft == "true":
+        if meta.get("draft", "false").lower() == "true":
             continue
         title = meta.get("title", "").strip()
         if not title:
@@ -148,18 +144,29 @@ def load_posts() -> list[Post]:
         if kind not in {"writing", "note", "link"}:
             raise ValueError(f"{path}: type must be writing, note, or link")
         description = meta.get("description", "").strip() or title
-        html = markdown.markdown(body, extensions=["extra", "sane_lists"])
-        tags = tuple(tag.strip() for tag in meta.get("tags", "").split(",") if tag.strip())
+        html = markdown.markdown(body, extensions=MARKDOWN_EXTENSIONS)
+        tags = parse_tags(meta.get("tags", ""))
         words = len(re.findall(r"\b\w+\b", body, flags=re.UNICODE))
-        reading_minutes = max(1, round(words / 220))
-        posts.append(Post(title, published, slug, kind, description, html, tags, reading_minutes, path))
+        posts.append(
+            Post(
+                title=title,
+                date=published,
+                slug=slug,
+                kind=kind,
+                description=description,
+                html=html,
+                tags=tags,
+                reading_minutes=max(1, round(words / 220)),
+                source=path,
+            )
+        )
     posts.sort(key=lambda post: (-post.date.toordinal(), post.slug))
     return posts
 
 
 def rss_feed(posts: list[Post]) -> str:
     origin = SITE["url"].rstrip("/")
-    items = []
+    items: list[str] = []
     for post in posts:
         link = f"{origin}/{post.slug}/"
         published = datetime.combine(post.date, time(12), tzinfo=timezone.utc)
@@ -174,11 +181,11 @@ def rss_feed(posts: list[Post]) -> str:
         )
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<rss version="2.0"><channel>'
-        f'<title>{xml_escape(SITE["title"])}</title>'
-        f'<link>{xml_escape(origin)}/</link>'
-        f'<description>{xml_escape(SITE["description"])}</description>'
-        '<language>en</language>'
+        "<rss version=\"2.0\"><channel>"
+        f"<title>{xml_escape(SITE['title'])}</title>"
+        f"<link>{xml_escape(origin)}/</link>"
+        f"<description>{xml_escape(SITE['description'])}</description>"
+        "<language>en</language>"
         + "".join(items)
         + "</channel></rss>\n"
     )
@@ -201,7 +208,7 @@ def sitemap(posts: list[Post]) -> str:
 
 
 def build() -> None:
-    posts = load_posts()  # Validate content before clearing the previous build.
+    posts = load_posts()  # Validate all Markdown before deleting the prior build.
     environment = Environment(
         loader=FileSystemLoader(TEMPLATES),
         autoescape=select_autoescape(["html", "xml"]),
@@ -212,27 +219,32 @@ def build() -> None:
     base = environment.get_template("base.html")
     index = environment.get_template("index.html")
     shared = {"site": SITE, "year": date.today().year}
-    writing = [post for post in posts if post.kind == "writing"]
+    writings = [post for post in posts if post.kind == "writing"]
     notes = [post for post in posts if post.kind in {"note", "link"}]
-
     pages: dict[Path, str] = {
         Path("index.html"): index.render(
             **shared,
             page_title=None,
             description=SITE["description"],
             canonical=SITE["url"].rstrip("/") + "/",
-            recent_writing=writing,
+            recent_writing=writings,
             notes=notes,
+            posts=posts,
         ),
         Path("feed.xml"): rss_feed(posts),
         Path("sitemap.xml"): sitemap(posts),
-        Path("robots.txt"): "User-agent: *\nAllow: /\nSitemap: " + SITE["url"].rstrip("/") + "/sitemap.xml\n",
+        Path("robots.txt"): "User-agent: *\nAllow: /\nSitemap: "
+        + SITE["url"].rstrip("/")
+        + "/sitemap.xml\n",
     }
     for post in posts:
         pages[Path(post.slug) / "index.html"] = base.render(
-            **shared, page_title=post.title, description=post.description,
+            **shared,
+            page_title=post.title,
+            description=post.description,
             canonical=SITE["url"].rstrip("/") + f"/{post.slug}/",
-            post=post, content=post.html,
+            post=post,
+            content=post.html,
         )
 
     if PUBLIC.is_symlink() or PUBLIC.resolve().parent != ROOT:

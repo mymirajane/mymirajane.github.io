@@ -1,65 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="home" id="home">
-  <h1>welcome to my profile!!!</h1>
-  <div class="section-head">Updated news <span>today 1234 · total 258267</span></div>
-  <div class="updates" id="diary">
-    <div>
-      <div class="update"><strong>사진첩</strong><a href="#projects">a new VQA note is here</a><span>diary 0/64</span></div>
-      <div class="update"><strong>게시판</strong><a href="#posts">three writings from my report</a><span>posts 0/25</span></div>
-      <div class="update"><strong>링크</strong><a href="#gallery">a small shelf of useful links</a><span>links 6/126</span></div>
-      <div class="update"><strong>공지</strong><a href="#guestbook">welcome to my public notebook</a><span>today 1234</span></div>
-    </div>
-    <div class="stats">diary <b>0/64</b><br>photos <b>0/343</b><br>posts <b>5/25</b><br>visitors <b>6/4126</b></div>
+<section class="hero" id="about">
+  <div>
+    <p class="eyebrow">hello, internet friend ✦</p>
+    <h1>A soft little home for <span>serious ideas.</span></h1>
+    <p>{{ site.bio }}</p>
+    <div class="hero-actions"><a class="pill primary" href="#writing">read the latest →</a><a class="pill" href="#notes">wander through notes</a></div>
   </div>
-
-  <div class="tabs"><a class="active" href="#home">Minilife</a> | <a href="#posts">Miniblog</a> | <a href="#gallery">Storyroom</a></div>
-  <div class="room">
-    <pre>+------------------------------------------------+
-|  .--------------------------------------------.  |
-|  |     MIRAJANE'S SMALL STUDY ROOM            |  |
-|  |                                            |  |
-|  |   [ window ]        .--------.             |  |
-|  |   |  cloud  |        | books  |             |  |
-|  |   |   sun   |   ____ | notes  |             |  |
-|  |   '---------'  |____| '--------'             |  |
-|  |      __        /____        .------.       |  |
-|  |     /        | desk |       | lamp |       |  |
-|  |____/_________|______|_______|______|_______|  |
-|       images + language + things worth keeping  |  |
-|  '--------------------------------------------'  |
-+------------------------------------------------+</pre>
-    <figcaption>my minilife · a quiet room for reports and links</figcaption>
+  <div class="ascii-wrap" aria-label="A smiling computer with a cup of tea">
+    <div><pre class="ascii-art">      .-''''-.
+    .'  .--.  '.
+   /   (◕‿◕)   \
+  |   .-====-.   |
+  |  |  HELLO |  |
+  |  |  MIRAJ |  |
+  |   '-.____.-'  |
+   \    /|  |\   /
+    '._/ |  | \_.'
+      (__) (__)
+       ╰─╯ ╰─╯</pre><p class="ascii-caption">a tiny computer says hi</p></div>
   </div>
-
-  <h2 id="projects">What I have been writing</h2>
-  {% if recent_writing %}
-  <ul class="post-list">
-  {% for post in recent_writing %}
-    <li class="post"><time datetime="{{ post.date.isoformat() }}"><span class="kind">{{ post.kind }}</span>{{ post.date_label }}</time><div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div></li>
-  {% endfor %}
-  </ul>
-  {% endif %}
-
-  <div class="chips" id="gallery"><a href="#posts">all posts</a><a href="#gallery">reading list</a><a href="#playlist">my media</a><a href="/feed.xml">RSS feed</a></div>
-
-  <h2 id="posts">What friends say / recent notes</h2>
-  {% if notes %}
-  <ul class="post-list">
-  {% for post in notes %}
-    <li class="post"><time datetime="{{ post.date.isoformat() }}"><span class="kind">{{ post.kind }}</span>{{ post.date_label }}</time><div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div></li>
-  {% endfor %}
-  </ul>
-  {% endif %}
-
-  <div class="lower">
-    <div class="lower-card" id="playlist"><pre> .--.
-( &gt; )
- '--'</pre><b>now playing</b><p>placeholder for music, audio notes and the occasional loop.</p></div>
-    <div class="lower-card"><pre> .--.
-( R )
- '--'</pre><b>reading / watching</b><p>placeholder shelf for papers, films and pages I want to remember.</p></div>
-  </div>
-  <div class="lower-card" id="guestbook" style="margin-top:8px"><b>guestbook / 방명록</b><p>A placeholder for kind notes from visitors. For now, the RSS feed and GitHub repo are the best way to leave a trace.</p></div>
 </section>
+
+<div class="section-heading" id="writing"><h2>recent writing ✎</h2><span>{{ recent_writing|length }} little essays</span></div>
+<div class="post-grid">
+{% for post in recent_writing %}
+  <a class="post-card" href="/{{ post.slug }}/"><div class="meta">{{ post.date_label }} · {{ post.reading_minutes }} min</div><h3>{{ post.title }}</h3><p>{{ post.description }}</p>{% if post.tags %}<div class="tag-row">{% for tag in post.tags %}<span class="tag">#{{ tag }}</span>{% endfor %}</div>{% endif %}</a>
+{% else %}
+  <p>No writing yet. Add a Markdown file to <code>content/</code> and run <code>python build.py</code>.</p>
+{% endfor %}
+</div>
+
+<div class="section-heading" id="notes"><h2>notes &amp; links ♡</h2><span>small things, often useful</span></div>
+<div class="two-col">
+  <div class="note-card mint"><h3>currently thinking about</h3><p>How uncertainty can make a model more honest, and how a diagram can make a proof feel friendly.</p><ul class="tiny-list"><li>Bayesian neural networks</li><li>visual question answering</li><li>probability, but cozy</li></ul></div>
+  <div class="note-card"><h3>the little shelf</h3><p>Some saved pages, papers, and other internet treasures.</p><ul class="tiny-list">{% for post in notes[:4] %}<li><a href="/{{ post.slug }}/">{{ post.title }}</a></li>{% else %}<li>More links soon ✦</li>{% endfor %}</ul></div>
+</div>
+
+<div class="section-heading"><h2>public notebook map</h2><span>choose a door</span></div>
+<div class="hero-actions"><a class="pill" href="#writing">✿ technical writing</a><a class="pill" href="#notes">☁ notes and links</a><a class="pill" href="/feed.xml">☕ rss feed</a></div>
 {% endblock %}

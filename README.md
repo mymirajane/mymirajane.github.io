@@ -1,6 +1,8 @@
 # Mirajane blog on GitHub Pages
 
-This is a text-first personal blog. A small Python generator converts Markdown in `content/` into static pages in `public/`. GitHub Actions builds and publishes the site on every push to `main`. It uses only Python-Markdown and Jinja2 beyond the standard library; Jekyll is not required.
+This is Mirajane's bubbly, pastel personal blog. A small Python generator converts Markdown in `content/` into static pages in `public/`. GitHub Actions builds and publishes the site on every push to `main`. It uses only Python-Markdown and Jinja2 beyond the standard library; Jekyll is not required. The templates include MathJax for LaTeX, Prism.js for fenced code, ASCII art, and small CSS animations.
+
+For the complete writing and deployment walkthrough, read [`BLOG_GUIDE.md`](BLOG_GUIDE.md).
 
 ## Add writing
 
