@@ -1,268 +1,64 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{{ description }}">
-  <meta name="google-site-verification" content="Kp3cN4-ewmF6JAmwcMbvHmX5zrwykXN3zNQ5udE-eXE">
-  <link rel="canonical" href="{{ canonical }}">
-  <meta name="color-scheme" content="light dark">
-  <title>{% if page_title %}{{ page_title }} · {% endif %}{{ site.title }}</title>
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="/feed.xml">
-  <style>
-    :root {
-      color-scheme: light;
-      --sky: #1977c8;
-      --sky-deep: #075aa9;
-      --chrome: #dbeaf2;
-      --chrome-dark: #8caab7;
-      --paper: #fffdf8;
-      --panel: #eef8fc;
-      --ink: #1b2730;
-      --quiet: #53656c;
-      --line: #a5bdc5;
-      --blue: #064e9f;
-      --pink: #f3e0e4;
-      --green: #d8edce;
-      --yellow: #fff0b7;
-    }
-    * { box-sizing: border-box; }
-    html { font-size: 15px; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: radial-gradient(circle at 48% 42%, #4aa9e8 0, var(--sky) 48%, var(--sky-deep) 100%);
-      color: var(--ink);
-      font: 1rem/1.45 "Courier New", Courier, monospace;
-      text-rendering: optimizeLegibility;
-    }
-    a { color: var(--blue); }
-    a:hover { color: #9d2539; }
-    a:focus-visible { outline: 2px dotted #9d2539; outline-offset: 3px; }
-    .skip { position: absolute; left: -9999px; }
-    .skip:focus { left: 1rem; top: .5rem; z-index: 9; padding: .25rem .5rem; background: var(--paper); }
-    .retro-window {
-      width: min(calc(100% - 1.2rem), 800px);
-      margin: 2.2rem auto;
-      border: 1px solid #174875;
-      background: var(--paper);
-      box-shadow: 9px 12px 0 rgba(7, 55, 105, .28), 0 20px 42px rgba(0, 33, 75, .25);
-    }
-    .window-chrome {
-      padding: .45rem .65rem .55rem;
-      background: linear-gradient(#f4fbff, var(--chrome));
-      border-bottom: 1px solid var(--chrome-dark);
-      color: #3c5867;
-      font-size: .72rem;
-    }
-    .window-bar { display: flex; align-items: center; gap: .45rem; }
-    .traffic { display: flex; gap: .25rem; }
-    .traffic i { display: block; width: .65rem; height: .65rem; border: 1px solid #6e8b97; border-radius: 50%; background: #e47a72; }
-    .traffic i:nth-child(2) { background: #e4c65f; }
-    .traffic i:nth-child(3) { background: #6bb575; }
-    .window-title { flex: 1; padding-left: .3rem; font-weight: 700; }
-    .window-actions { letter-spacing: .35rem; }
-    .address-row { display: flex; align-items: center; gap: .4rem; margin-top: .45rem; }
-    .address { flex: 1; min-width: 0; overflow: hidden; padding: .22rem .45rem; border: 1px inset #b4c7cf; background: #fff; color: #526d7d; white-space: nowrap; text-overflow: ellipsis; }
-    .window-tab { width: 4.8rem; padding: .22rem .35rem; border: 1px solid #a6bdc6; background: #edf6f9; text-align: center; }
-    .window-body { display: grid; grid-template-columns: 145px minmax(0, 1fr) 135px; gap: .9rem; padding: .9rem; background: linear-gradient(90deg, #e8f4f8, #fffdf8 22%, #fffdf8 78%, #e8f4f8); }
-    .rail { min-width: 0; }
-    .left-rail { padding-right: .65rem; border-right: 1px solid var(--line); }
-    .right-rail { padding-left: .65rem; border-left: 1px solid var(--line); }
-    .avatar-box { margin-bottom: .55rem; padding: .3rem; border: 1px solid #6da4a2; background: #d9efe7; text-align: center; }
-    .ascii-avatar, .ascii-art { margin: 0; overflow: hidden; color: #24566a; font: .68rem/1.12 "Courier New", monospace; white-space: pre; }
-    .profile-name { margin: .35rem 0 0; color: #102f45; font-size: 1.65rem; line-height: 1; }
-    .profile-handle { margin: .2rem 0 .55rem; color: var(--quiet); font-size: .72rem; }
-    .profile-bio { margin: 0 0 .75rem; color: var(--quiet); font-size: .72rem; line-height: 1.4; }
-    .placeholder-links { display: grid; gap: .28rem; }
-    .retro-button { display: block; padding: .25rem .2rem; border: 1px solid #9aadb4; background: linear-gradient(#fff, #e8eff0); color: #43535a; font-size: .76rem; text-align: center; text-decoration: none; box-shadow: 1px 1px 0 #bdc9cc; }
-    .retro-button:hover { background: var(--yellow); color: #233a50; }
-    .profile-stats { margin-top: .75rem; padding-top: .5rem; border-top: 1px dotted var(--line); color: var(--quiet); font-size: .68rem; }
-    .retro-main { min-width: 0; }
-    .retro-main h1, .retro-main h2, .retro-main h3 { font-weight: 700; }
-    .retro-main h1 { margin: 0 0 .8rem; color: #123c66; font-size: 1.16rem; text-decoration: underline; text-decoration-thickness: 2px; }
-    .retro-main h2 { margin: 1.2rem 0 .65rem; padding: .3rem .55rem; background: linear-gradient(#d8f1f5, #a9d8e3); border: 1px solid #94c5cf; color: #153e4c; font-size: .92rem; text-align: center; }
-    .retro-main h3 { margin: 1.3rem 0 .45rem; color: #143f74; font-size: .92rem; }
-    .welcome-banner { margin-bottom: .75rem; padding: .4rem .5rem; border: 1px solid #a9b8c0; background: #eff8fb; }
-    .welcome-banner .ascii-art { color: #245993; font-size: .59rem; line-height: 1.03; }
-    .retro-main p { margin: 0 0 .8rem; font-size: .82rem; }
-    .retro-main ul { margin: .3rem 0 .9rem; padding-left: 1.25rem; }
-    .retro-main li { margin-bottom: .35rem; font-size: .78rem; }
-    .post-list { list-style: none; margin: 0; padding: 0; }
-    .post-row { display: grid; grid-template-columns: 5.4rem minmax(0, 1fr); gap: .55rem; padding: .45rem 0; border-bottom: 1px dotted var(--line); }
-    .post-meta { color: var(--quiet); font-size: .65rem; line-height: 1.35; }
-    .post-meta .kind { display: block; color: #a0443c; font-weight: 700; text-transform: uppercase; }
-    .post-row a { font-size: .8rem; font-weight: 700; text-decoration: none; }
-    .post-row p { margin: .12rem 0 0; color: var(--quiet); font-size: .7rem; line-height: 1.35; }
-    .mini-links { display: grid; grid-template-columns: repeat(2, 1fr); gap: .45rem; margin-top: .75rem; }
-    .mini-link { padding: .5rem .3rem; border: 1px dashed #94aeb8; background: #f8fcfc; color: #27506c; font-size: .7rem; text-align: center; text-decoration: none; }
-    .mini-link:hover { background: var(--pink); }
-    .side-folder { margin-bottom: .8rem; padding: .35rem; border: 1px solid #bdd0d5; background: #f6fbf9; text-align: center; }
-    .side-folder .ascii-art { color: #2c6175; font-size: .58rem; }
-    .side-label { margin-top: .25rem; color: #375866; font-size: .68rem; font-weight: 700; }
-    .now-playing { padding: .35rem; border: 1px solid #88a8b3; background: #d9edf1; }
-    .now-playing .ascii-art { font-size: .53rem; }
-    .now-playing p { margin: .35rem 0 0; color: #46626b; font-size: .65rem; line-height: 1.25; }
-    .status-line { margin: .85rem 0 0; padding-top: .45rem; border-top: 1px dotted var(--line); color: var(--quiet); font-size: .64rem; }
-    .home-lower { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-top: 1rem; }
-    .lower-card { padding: .55rem; border: 1px solid #b3c5cb; background: #f2f8f7; }
-    .lower-card .ascii-art { float: left; margin-right: .5rem; font-size: .62rem; }
-    .lower-card strong { display: block; color: #164b70; font-size: .72rem; }
-    .lower-card p { clear: both; padding-top: .35rem; margin-bottom: 0; font-size: .7rem; }
-    footer { padding: .55rem .9rem .7rem; border-top: 1px solid var(--chrome-dark); background: var(--chrome); color: #526a75; font-size: .68rem; }
-    .footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; }
-    .footer-links { display: flex; flex-wrap: wrap; gap: .75rem; }
-    .footer-links a { color: #285d82; }
-    .retro-article { max-width: 100%; padding: .35rem .3rem 1.2rem; }
-    .retro-article .article-kicker { color: #a0443c; font-size: .7rem; font-weight: 700; text-transform: uppercase; }
-    .retro-article h1 { margin-top: .4rem; font-size: 1.35rem; }
-    .retro-article .lede { color: var(--quiet); font-size: .84rem; }
-    .article-meta { display: flex; flex-wrap: wrap; gap: .6rem; padding: .5rem 0; border-top: 1px dotted var(--line); border-bottom: 1px dotted var(--line); color: var(--quiet); font-size: .68rem; }
-    .post-body { padding-top: .8rem; }
-    .post-body h2 { text-align: left; }
-    .post-body h3 { margin-top: 1.1rem; }
-    .post-body img { max-width: 100%; height: auto; }
-    blockquote { margin: .8rem 0; padding: .2rem .6rem; border-left: 3px solid #a0443c; background: #fff5e9; color: var(--quiet); }
-    pre { overflow-x: auto; padding: .5rem; border: 1px solid var(--line); background: #eef5f5; font-size: .72rem; }
-    code { font-family: "Courier New", monospace; font-size: .9em; }
-    .article-end { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.3rem; padding-top: .5rem; border-top: 1px solid var(--line); font-size: .7rem; }
-    @media (max-width: 680px) {
-      .retro-window { margin: .6rem auto; }
-      .window-body { grid-template-columns: 1fr; background: var(--paper); }
-      .left-rail, .right-rail { padding: 0 0 .7rem; border: 0; border-bottom: 1px solid var(--line); }
-      .right-rail { border-top: 1px solid var(--line); border-bottom: 0; padding-top: .7rem; }
-      .left-rail { display: grid; grid-template-columns: 105px 1fr; gap: .55rem; }
-      .avatar-box { grid-row: span 2; }
-      .profile-bio { grid-column: 2; }
-      .placeholder-links { grid-column: 1 / -1; grid-template-columns: repeat(5, 1fr); }
-      .profile-stats { grid-column: 1 / -1; }
-      .right-rail { display: grid; grid-template-columns: repeat(2, 1fr); gap: .55rem; }
-      .status-line { grid-column: 1 / -1; }
-    }
-    @media (max-width: 420px) {
-      body { font-size: 14px; }
-      .placeholder-links { grid-template-columns: repeat(2, 1fr); }
-      .home-lower { grid-template-columns: 1fr; }
-      .post-row { grid-template-columns: 4.2rem minmax(0, 1fr); }
-    }
-    @media (prefers-color-scheme: dark) {
-      :root { color-scheme: dark; --paper:#17232b; --panel:#1c3039; --ink:#edf3f4; --quiet:#afc0c4; --line:#50656d; --blue:#a9d4ff; --chrome:#243c47; --chrome-dark:#607e88; }
-      body { background: radial-gradient(circle at 48% 42%, #2c7895 0, #164f70 48%, #102f52 100%); }
-      .retro-window { border-color: #7c9baa; }
-      .window-chrome, footer { background: linear-gradient(#38535e, var(--chrome)); }
-      .address, .window-tab, .welcome-banner, .side-folder, .mini-link, .lower-card, .retro-button, .now-playing, .avatar-box, pre { background: #233943; color: var(--ink); }
-      .retro-main h1 { color: #b9dcff; }
-      .retro-main h2 { background: #2f5b68; border-color: #4a7781; color: #e7f5f5; }
-      .retro-button, .mini-link, .footer-links a, a { color: var(--blue); }
-    }
-      /* Version 2 Cyworld-inspired shell */
-    body { background: repeating-linear-gradient(0deg, rgba(100,120,125,.07) 0, rgba(100,120,125,.07) 1px, transparent 1px, transparent 5px), linear-gradient(140deg,#e4e8e6,#cbd5d5 50%,#e9ebe8); font-family:"Trebuchet MS",Verdana,Arial,sans-serif; }
-    .retro-window { width:min(calc(100% - 1rem), 980px); margin:1.25rem auto; padding:1.1rem; border:1px solid #697477; border-radius:16px; background:#f7f8f5; box-shadow:0 12px 26px rgba(36,53,57,.23); }
-    .retro-window::before { content:""; position:absolute; inset:.55rem; border:2px dashed #9ca7a8; border-radius:13px; pointer-events:none; }
-    .window-chrome { position:relative; z-index:1; padding:.65rem 1.1rem .9rem; background:#f7f8f5; border:0; color:#6d7b80; }
-    .window-bar { padding-bottom:.25rem; border-bottom:1px solid #d1d5d2; }
-    .window-title { color:#176780; font-size:1.35rem; letter-spacing:.02em; }
-    .window-title::after { content:"  -  TODAY 1234  |  TOTAL 258267"; display:block; margin-top:.12rem; color:#d56576; font:.65rem "Courier New",monospace; letter-spacing:.08em; }
-    .window-actions { color:#829096; } .address-row { display:none; }
-    .window-body { position:relative; z-index:1; grid-template-columns:225px minmax(0,1fr) 86px; gap:1.1rem; padding:0 1.1rem 1rem; background:#f7f8f5; }
-    .left-rail { padding:.7rem; border:1px solid #c4cbca; border-radius:15px; background:#fffef9; box-shadow:inset 0 0 0 4px #f1f3f0; }
-    .avatar-box { margin:0 0 .55rem; border:0; border-bottom:1px solid #d5dcdc; border-radius:0; background:#fffef9; }
-    .profile-bio { color:#697a7f; } .placeholder-links { border-top:1px dotted #d1d5d2; padding-top:.5rem; }
-    .retro-button { border:0; border-bottom:1px solid #d1d5d2; border-radius:0; background:transparent; color:#63757a; box-shadow:none; }
-    .retro-button:hover { background:#e7f2f1; color:#d56576; } .profile-stats { border-top:1px dotted #d1d5d2; color:#7a888b; }
-    .retro-main { padding-top:.15rem; color:#40535b; } .retro-main h1 { color:#176780; font-size:1.25rem; }
-    .retro-main h2 { margin-top:1rem; padding:.3rem .55rem; border:1px solid #a9cbd2; border-radius:0; background:linear-gradient(#d8f1f5,#a9d8e3); color:#153e4c; font-size:.92rem; text-align:left; }
-    .welcome-banner { min-height:190px; margin:.35rem 0 .7rem; padding:.8rem; border:1px solid #c7d1cf; background:linear-gradient(135deg,#fefdf7,#e8f3f1); text-align:center; }
-    .welcome-banner::before { content:"Minilife  |  Miniblog  |  Storyroom"; display:block; margin:-.25rem 0 .4rem; color:#1987a4; font-size:.75rem; text-align:left; }
-    .welcome-banner .ascii-art { color:#6a8f9b; font-size:.66rem; }
-    .post-list { border-top:1px dotted #d1d5d2; } .post-row { padding:.4rem 0; border-bottom:1px dotted #d1d5d2; }
-    .post-row a { color:#176780; } .mini-links a { border:1px solid #bed0d0; background:#f9fdfb; color:#1987a4; }
-    .right-rail { padding-top:1.2rem; } .side-folder { display:block; text-decoration:none; border:1px solid #76a9b7; border-radius:4px; background:linear-gradient(#76c2d4,#338ba8); color:#fff; }
-    .side-folder .ascii-art { display:none; } .side-label { margin:0; color:#fff; font-size:.68rem; text-shadow:0 1px #2d6374; }
-    .now-playing { border:1px solid #c7d1cf; border-radius:4px; background:#e7f2f1; } .now-playing .ascii-art { color:#6a8f9b; }
-    .status-line { color:#7a888b; } footer { position:relative; z-index:1; border-top:1px solid #d0d5d1; background:#f7f8f5; color:#7f8c8f; }</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{{ description }}">
+<meta name="google-site-verification" content="Kp3cN4-ewmF6JAmwcMbvHmX5zrwykXN3zNQ5udE-eXE">
+<link rel="canonical" href="{{ canonical }}">
+<title>{% if page_title %}{{ page_title }} · {% endif %}{{ site.title }}</title>
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="/feed.xml">
+<style>
+:root{--paper:#fbfbf7;--panel:#fffefa;--ink:#5d7076;--muted:#8a999b;--line:#d9dedd;--cyan:#2995ad;--cyan2:#59b5c7;--red:#d4606d}
+*{box-sizing:border-box}html{font-size:15px}body{margin:0;min-height:100vh;background:linear-gradient(145deg,#e6e9e6,#cfd7d6 52%,#eff0ed);color:var(--ink);font:14px/1.45 Arial,sans-serif}
+a{color:var(--cyan);text-decoration:none}a:hover{color:var(--red)}a:focus-visible{outline:2px dotted var(--red);outline-offset:3px}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:.5rem;z-index:9;background:white;padding:.3rem}
+.cy-frame{width:min(calc(100% - 1rem),1100px);margin:1rem auto;padding:1rem;border:1px solid #6d797b;border-radius:17px;background:#f5f7f4;box-shadow:0 15px 34px rgba(49,65,66,.25);position:relative}.cy-frame:before{content:"";position:absolute;inset:.55rem;border:2px dashed #a4acad;border-radius:13px;pointer-events:none}
+.cy-top,.cy-grid,.cy-footer{position:relative;z-index:1}.cy-top{padding:.5rem 1rem 1rem}.counter{font:12px "Courier New",monospace;color:#7b898d;text-transform:uppercase}.counter b{color:var(--red)}.cy-heading{display:flex;justify-content:space-between;align-items:end;gap:1rem}.cy-title{margin:.3rem 0 0;color:#2c7185;font-size:26px;font-weight:700}.cy-title small{display:block;color:#8a999b;font:11px "Courier New",monospace;letter-spacing:.16em}.cy-url{color:#849295;font:11px "Courier New",monospace}
+.cy-grid{display:grid;grid-template-columns:230px minmax(0,1fr) 104px;gap:16px;padding:0 1rem 1rem}.profile{padding:11px;border:1px solid #c9d1ce;border-radius:17px;background:var(--panel);box-shadow:inset 0 0 0 4px #f0f2ee}.today{display:flex;justify-content:space-between;padding:5px 7px;border-bottom:1px solid var(--line);font:11px "Courier New",monospace}.today b{color:var(--red)}.avatar{display:grid;place-items:center;min-height:185px;margin:9px 8px;border:1px solid #dce1dd;background:#fcfcf8}.avatar pre,.room pre,.now-playing pre{margin:0;white-space:pre;color:#7a5d65;font:12px/1.08 "Courier New",monospace}.profile h1{margin:.3rem 0 0;color:#37778a;text-align:center;font-size:23px}.handle{text-align:center;color:#899699;font:11px "Courier New",monospace}.bio{margin:9px 3px;color:#6e7e82;font-size:12px;text-align:center}.profile-links{margin-top:10px;padding-top:6px;border-top:1px dotted var(--line)}.profile-links a{display:block;padding:4px;color:#728285;font:12px "Courier New",monospace;border-bottom:1px solid #e0e4e1}.profile-links a:hover{background:#e7f4f2;color:var(--red)}.profile-foot{margin:10px 3px 2px;padding-top:7px;border-top:1px dotted var(--line);color:#899699;font:10px/1.5 "Courier New",monospace}
+.center{min-width:0;padding-top:4px}.center h1{margin:0 0 10px;color:#27768a;font-size:20px}.updates{padding:7px 0;border-top:1px solid var(--line);border-bottom:1px dotted var(--line)}.update{display:grid;grid-template-columns:66px minmax(0,1fr) 90px;gap:8px;padding:4px 0;border-bottom:1px dotted #e2e5e3;font-size:12px}.update:last-child{border:0}.update strong{color:var(--red);font:11px "Courier New",monospace}.update span{white-space:nowrap;color:#98a2a3;font:10px "Courier New",monospace;text-align:right}.tabs{margin-top:12px;padding-bottom:5px;border-bottom:1px solid var(--line);color:#8d999b;font-size:13px}.tabs b{color:var(--cyan)}.room{min-height:190px;margin-top:5px;padding:13px;border:1px solid #cad7d4;background:linear-gradient(140deg,#fffdf4,#e6f1ef);text-align:center}.room pre{color:#6a9099;font-size:12px;line-height:1.15}.room figcaption{margin-top:7px;color:#879598;font:10px "Courier New",monospace}.center h2{margin:14px 0 5px;padding-bottom:4px;border-bottom:2px solid #d8ddda;color:#2d869b;font-size:15px}.post-list{list-style:none;margin:0;padding:0}.post{display:grid;grid-template-columns:65px minmax(0,1fr);gap:8px;padding:6px 0;border-bottom:1px dotted var(--line)}.post time{color:#8b999b;font:10px "Courier New",monospace}.post .kind{display:block;color:var(--red);font-weight:700;text-transform:uppercase}.post a{font-size:13px;font-weight:700}.post p{margin:2px 0 0;color:#77878a;font-size:11px}.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}.chips a{padding:4px 7px;border:1px solid #c7d9d7;background:#fcfffc;font:10px "Courier New",monospace}.lower{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.lower-card{padding:8px;border:1px solid #d1dad7;background:#f8fcfa;color:#738487;font-size:11px}.lower-card b{display:block;color:#33798a;font-size:12px}.lower-card p{margin:4px 0 0}.lower-card pre{float:left;margin-right:7px;color:#76969d;font:11px/1.05 "Courier New",monospace}
+.nav{display:flex;flex-direction:column;gap:4px;padding-top:26px}.nav a{padding:8px 3px;border:1px solid #69a4b4;border-radius:5px;background:linear-gradient(#78c5d5,#348da7);color:white;text-align:center;font-size:11px;text-shadow:0 1px #2e6d7e}.nav a:hover{background:linear-gradient(#ea929f,#c35368);color:white}.nav small{display:block;font:9px "Courier New",monospace}.now-playing{margin-top:10px;padding:7px;border:1px solid #c9d7d4;background:#e5f2f0;text-align:center}.now-playing pre{font-size:9px;color:#6c929a}.now-playing p{margin:5px 0 0;color:#748487;font:9px "Courier New",monospace}.cy-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:10px 1rem 0;border-top:1px solid var(--line);color:#879497;font:10px "Courier New",monospace}.cy-footer a{margin-left:10px}
+.article h1{font-size:24px}.article .lede{color:#738386}.article-meta{display:flex;flex-wrap:wrap;gap:12px;padding:7px 0;border-block:1px dotted var(--line);color:#899799;font:10px "Courier New",monospace}.post-body{padding-top:9px}.post-body h2{margin-top:15px}.post-body img{max-width:100%;height:auto}.post-body blockquote{margin:10px 0;padding:5px 8px;border-left:3px solid var(--red);background:#fff4f3}.post-body pre{overflow:auto;padding:8px;border:1px solid var(--line);background:#f0f6f4;font-size:11px}.article-end{display:flex;justify-content:space-between;margin-top:16px;padding-top:8px;border-top:1px solid var(--line);font:11px "Courier New",monospace}
+@media(max-width:760px){.cy-grid{grid-template-columns:185px minmax(0,1fr) 76px;gap:9px;padding-inline:7px}.cy-url{display:none}.update{grid-template-columns:58px minmax(0,1fr)}.update span{display:none}}
+@media(max-width:600px){.cy-frame{width:calc(100% - 8px);margin:4px auto;padding:9px}.cy-grid{grid-template-columns:1fr}.profile{display:grid;grid-template-columns:112px minmax(0,1fr);gap:4px 9px}.today,.profile-links,.profile-foot{grid-column:1/-1}.avatar{grid-row:span 2;min-height:135px;margin:3px}.profile h1,.handle,.bio{text-align:left}.bio{margin-left:0}.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding-top:0}.nav a{padding:6px 2px}.now-playing{display:none}.lower{grid-template-columns:1fr}.cy-heading{align-items:start}.cy-title{font-size:19px}}
+</style>
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
-  <div class="retro-window">
-    <header class="window-chrome">
-      <div class="window-bar">
-        <span class="traffic" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="window-title">Mirajane's blog.exe</span>
-        <span class="window-actions" aria-hidden="true">— □ ×</span>
-      </div>
-      <div class="address-row">
-        <span aria-hidden="true">← →</span>
-        <span class="address">https://mymirajane.github.io/</span>
-        <span class="window-tab">☆ ♡</span>
-      </div>
-    </header>
-    <div class="window-body">
-      <aside class="rail left-rail" aria-label="Profile">
-        <div class="avatar-box">
-          <pre class="ascii-avatar" aria-label="ASCII portrait"> .------.
- /  .--.  |  /      |
-| |  ()  | |
-|  ____/  |
- '---||---'
-     ||</pre>
-        </div>
-        <div>
-          <h1 class="profile-name">Mirajane</h1>
-          <p class="profile-handle">@mymirajane<br>she/her · VQA</p>
-          <p class="profile-bio">notes on images, language, reports and things worth keeping.</p>
-        </div>
-        <div class="placeholder-links" aria-label="Placeholder links">
-          <a class="retro-button" href="#placeholder-search">Search</a>
-          <a class="retro-button" href="#placeholder-twitter">Twitter</a>
-          <a class="retro-button" href="#placeholder-instagram">Instagram</a>
-          <a class="retro-button" href="#placeholder-airbuds">Airbuds</a>
-          <a class="retro-button" href="#placeholder-letterboxd">letterboxd</a>
-        </div>
-        <div class="profile-stats">Profile views: 001,056<br>Last online: {{ year }}/10/25</div>
-      </aside>
-
-      <main id="main" class="retro-main">
-        {% block content %}
-        <article class="retro-article">
-          <div class="article-kicker">{{ post.kind }} · {{ post.date_label }}</div>
-          <h1>{{ post.title }}</h1>
-          <p class="lede">{{ post.description }}</p>
-          <div class="article-meta"><span>{{ site.author }}</span><span>{{ post.reading_minutes }} min read</span>{% for tag in post.tags %}<span>#{{ tag }}</span>{% endfor %}</div>
-          <div class="post-body">{{ content|safe }}</div>
-          <div class="article-end"><a href="/">← home</a><a href="/feed.xml">RSS ↗</a></div>
-        </article>
-        {% endblock %}
-      </main>
-
-      <aside class="rail right-rail" aria-label="Site navigation">
-  <a class="side-folder" href="/"><div class="side-label">홈<br><small>home</small></div></a>
-  <a class="side-folder" href="/#profile"><div class="side-label">프로필<br><small>profile</small></div></a>
-  <a class="side-folder" href="/#diary"><div class="side-label">다이어리<br><small>diary</small></div></a>
-  <a class="side-folder" href="/#projects"><div class="side-label">프로젝트<br><small>projects</small></div></a>
-  <a class="side-folder" href="/#gallery"><div class="side-label">갤러리<br><small>gallery</small></div></a>
-  <a class="side-folder" href="/#posts"><div class="side-label">게시판<br><small>posts</small></div></a>
-  <a class="side-folder" href="/#playlist"><div class="side-label">플레이리스트<br><small>playlist</small></div></a>
-  <a class="side-folder" href="/#guestbook"><div class="side-label">방명록<br><small>guestbook</small></div></a>
-  <div class="now-playing"><pre class="ascii-art">+----------+
-|  NOW     |
-| PLAYING  |
-| .------. |
-| | &gt;  || |
-| '------' |
-+----------+</pre><p>♪ image + question<br>01:42 / mirajane.fm</p></div>
-  <p class="status-line">♫ currently online<br>♡ thanks for visiting</p>
+<a class="skip" href="#main">Skip to content</a>
+<div class="cy-frame">
+<header class="cy-top">
+  <div class="counter">today <b>1234</b> &nbsp;|&nbsp; total <strong>258267</strong></div>
+  <div class="cy-heading"><a class="cy-title" href="/">사이좋은 기록들<small>MIRAJANE / FIELD NOTES</small></a><span class="cy-url">https://mymirajane.github.io/</span></div>
+</header>
+<div class="cy-grid">
+<aside class="profile" id="profile">
+  <div class="today"><span>TODAY IS...</span><b>✿ 행복</b></div>
+  <div class="avatar"><pre>      .-''''-.
+    .'  _  _  '.
+   /   (o)(o)     |      __      |
+  |   .-'  '-.   |
+     ______/  /
+    '.  ----  .'
+      '-.__.-'
+       /|  |      /_|__|_</pre></div>
+  <div><h1>Mirajane</h1><p class="handle">@mymirajane<br>VQA / student</p><p class="bio">notes on images, language, reports and things worth keeping.</p></div>
+  <div class="profile-links"><a href="#home">▸ home</a><a href="#diary">▸ diary</a><a href="#projects">▸ projects</a><a href="#guestbook">▸ guestbook</a><a href="/feed.xml">▸ rss feed</a></div>
+  <p class="profile-foot">Profile views: 001,056<br>Last online: {{ year }}/10/25<br>♡ thanks for visiting</p>
 </aside>
-    </div>
-    <footer>
-      <div class="footer-row">
-        <span>© {{ year }} {{ site.author }} · made with markdown</span>
-        <span class="footer-links"><a href="/">home</a><a href="/feed.xml">RSS</a>{% for link in site.social_links %}<a href="{{ link.url }}">{{ link.name }}</a>{% endfor %}</span>
-      </div>
-    </footer>
-  </div>
+<main class="center" id="main">
+{% block content %}
+<article class="article"><div class="article-kicker">{{ post.kind }} · {{ post.date_label }}</div><h1>{{ post.title }}</h1><p class="lede">{{ post.description }}</p><div class="article-meta"><span>{{ site.author }}</span><span>{{ post.reading_minutes }} min read</span>{% for tag in post.tags %}<span>#{{ tag }}</span>{% endfor %}</div><div class="post-body">{{ content|safe }}</div><div class="article-end"><a href="/">← home</a><a href="/feed.xml">RSS ↗</a></div></article>
+{% endblock %}
+</main>
+<nav class="nav" aria-label="Site navigation">
+<a href="/">홈<small>home</small></a><a href="/#profile">프로필<small>profile</small></a><a href="/#diary">다이어리<small>diary</small></a><a href="/#projects">프로젝트<small>projects</small></a><a href="/#gallery">갤러리<small>gallery</small></a><a href="/#posts">게시판<small>posts</small></a><a href="/#playlist">플레이리스트<small>playlist</small></a><a href="/#guestbook">방명록<small>guestbook</small></a>
+<div class="now-playing"><pre>+--------+
+| NOW    |
+| PLAYING|
+|  &gt; ||  |
++--------+</pre><p>♪ image + question<br>01:42</p></div>
+</nav>
+</div>
+<footer class="cy-footer"><span>© {{ year }} {{ site.author }} · made with markdown</span><span><a href="/feed.xml">RSS</a>{% for link in site.social_links %}<a href="{{ link.url }}">{{ link.name }}</a>{% endfor %}</span></footer>
+</div>
 </body>
 </html>
-
-
-

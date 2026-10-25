@@ -1,70 +1,64 @@
 {% extends "base.html" %}
-
 {% block content %}
-<section class="retro-article" id="home">
+<section class="home" id="home">
   <h1>welcome to my profile!!!</h1>
-  <div class="welcome-banner">
-    <pre class="ascii-art" aria-label="ASCII banner"> __  __ ___ ____    _    _   _ ___ _   _  ___
-|  \/  |_ _|  _ \  / \  | \ | |_ _| \ | |/ _ \
-| |\/| || || |_) |/ _ \ |  \| || ||  \| | | | |
-| |  | || ||  _ < / ___ \| |\  || || |\  | |_| |
-|_|  |_|___|_| \_/_/   \_\_| \_|___|_| \_|\___/
-                 field notes / 余白 / v1.0</pre>
+  <div class="updates" id="diary">
+    <div>
+      <div class="update"><strong>사진첩</strong><a href="#projects">a new VQA note is here</a><span>diary 0/64</span></div>
+      <div class="update"><strong>게시판</strong><a href="#posts">three writings from my report</a><span>posts 0/25</span></div>
+      <div class="update"><strong>링크</strong><a href="#gallery">a small shelf of useful links</a><span>links 6/126</span></div>
+      <div class="update"><strong>공지</strong><a href="#guestbook">welcome to my public notebook</a><span>today 1234</span></div>
+    </div>
+    <div class="stats">diary <b>0/64</b><br>photos <b>0/343</b><br>posts <b>5/25</b><br>visitors <b>6/4126</b></div>
   </div>
-  <h2 id="diary">read this first</h2>
-  <p>Before following, I write about visual question answering, language, study notes and small observations. This is a public notebook: unfinished ideas can stay unfinished, and useful links can stay useful.</p>
-  <p>My reports are adapted into shorter pieces here so they are easier to read, search and share.</p>
 
-  <h2 id="projects">My VQA reports</h2>
+  <div class="tabs"><a class="active" href="#home">Minilife</a> | <a href="#posts">Miniblog</a> | <a href="#gallery">Storyroom</a></div>
+  <div class="room">
+    <pre>+------------------------------------------------+
+|  .--------------------------------------------.  |
+|  |     MIRAJANE'S SMALL STUDY ROOM            |  |
+|  |                                            |  |
+|  |   [ window ]        .--------.             |  |
+|  |   |  cloud  |        | books  |             |  |
+|  |   |   sun   |   ____ | notes  |             |  |
+|  |   '---------'  |____| '--------'             |  |
+|  |      __        /____        .------.       |  |
+|  |     /        | desk |       | lamp |       |  |
+|  |____/_________|______|_______|______|_______|  |
+|       images + language + things worth keeping  |  |
+|  '--------------------------------------------'  |
++------------------------------------------------+</pre>
+    <figcaption>my minilife · a quiet room for reports and links</figcaption>
+  </div>
+
+  <h2 id="projects">What I have been writing</h2>
   {% if recent_writing %}
   <ul class="post-list">
-    {% for post in recent_writing %}
-    <li class="post-row">
-      <div class="post-meta"><span class="kind">{{ post.kind }}</span><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time></div>
-      <div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div>
-    </li>
-    {% endfor %}
+  {% for post in recent_writing %}
+    <li class="post"><time datetime="{{ post.date.isoformat() }}"><span class="kind">{{ post.kind }}</span>{{ post.date_label }}</time><div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div></li>
+  {% endfor %}
   </ul>
   {% endif %}
 
-  <div class="mini-links" aria-label="Quick links">
-    <a class="mini-link" href="#posts">all posts ↘</a>
-    <a class="mini-link" href="#gallery">reading list ↘</a>
-    <a class="mini-link" href="#playlist">my media ↘</a>
-    <a class="mini-link" href="/feed.xml">RSS feed ↗</a>
-  </div>
+  <div class="chips" id="gallery"><a href="#posts">all posts</a><a href="#gallery">reading list</a><a href="#playlist">my media</a><a href="/feed.xml">RSS feed</a></div>
 
-  <h2 id="posts">recent posts / notes / links</h2>
+  <h2 id="posts">What friends say / recent notes</h2>
   {% if notes %}
   <ul class="post-list">
-    {% for post in notes %}
-    <li class="post-row">
-      <div class="post-meta"><span class="kind">{{ post.kind }}</span><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time></div>
-      <div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div>
-    </li>
-    {% endfor %}
+  {% for post in notes %}
+    <li class="post"><time datetime="{{ post.date.isoformat() }}"><span class="kind">{{ post.kind }}</span>{{ post.date_label }}</time><div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div></li>
+  {% endfor %}
   </ul>
   {% endif %}
 
-  <div class="home-lower">
-    <div class="lower-card" id="gallery">
-      <pre class="ascii-art" aria-hidden="true"> .-.
-( R )
- '-'</pre>
-      <strong>reading / watching</strong>
-      <p>placeholder shelf for papers, films and pages I want to remember.</p>
-    </div>
-    <div class="lower-card" id="playlist">
-      <pre class="ascii-art" aria-hidden="true"> .--.
+  <div class="lower">
+    <div class="lower-card" id="playlist"><pre> .--.
 ( &gt; )
- '--'</pre>
-      <strong>now playing</strong>
-      <p>placeholder for music, audio notes and the occasional loop.</p>
-    </div>
+ '--'</pre><b>now playing</b><p>placeholder for music, audio notes and the occasional loop.</p></div>
+    <div class="lower-card"><pre> .--.
+( R )
+ '--'</pre><b>reading / watching</b><p>placeholder shelf for papers, films and pages I want to remember.</p></div>
   </div>
-  <div class="lower-card" id="guestbook" style="margin-top:.6rem">
-    <strong>guestbook / 방명록</strong>
-    <p>A placeholder for kind notes from visitors. For now, the RSS feed and GitHub repo are the best way to leave a trace.</p>
-  </div>
+  <div class="lower-card" id="guestbook" style="margin-top:8px"><b>guestbook / 방명록</b><p>A placeholder for kind notes from visitors. For now, the RSS feed and GitHub repo are the best way to leave a trace.</p></div>
 </section>
 {% endblock %}
