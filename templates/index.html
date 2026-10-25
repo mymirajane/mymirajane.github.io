@@ -1,58 +1,66 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="hero" aria-labelledby="intro-title">
-  <div class="kicker">personal archive · 2026</div>
-  <h1 id="intro-title">Ideas in progress,<br><em>kept in public.</em></h1>
-  <p class="hero-copy">{{ site.bio }}</p>
-  <div class="hero-signature">
-    <span><strong>Mirajane</strong> · visual question answering, language, small observations</span>
-    <span>更新中 · always in progress</span>
+<section class="retro-article">
+  <h1>welcome to my profile!!!</h1>
+  <div class="welcome-banner">
+    <pre class="ascii-art" aria-label="ASCII banner"> __  __ ___ ____    _    _   _ ___ _   _  ___
+|  \/  |_ _|  _ \  / \  | \ | |_ _| \ | |/ _ \
+| |\/| || || |_) |/ _ \ |  \| || ||  \| | | | |
+| |  | || ||  _ < / ___ \| |\  || || |\  | |_| |
+|_|  |_|___|_| \_/_/   \_\_| \_|___|_| \_|\___/
+                 field notes / 余白 / v1.0</pre>
   </div>
-</section>
+  <h2>read this first</h2>
+  <p>Before following, I write about visual question answering, language, study notes and small observations. This is a public notebook: unfinished ideas can stay unfinished, and useful links can stay useful.</p>
+  <p>My reports are adapted into shorter pieces here so they are easier to read, search and share.</p>
 
-<section class="section" id="writing" aria-labelledby="writing-title">
-  <div class="section-heading"><span>01</span><h2 id="writing-title">Recent writing</h2><a href="#writing">Archive ↗</a></div>
+  <h2>My VQA reports</h2>
   {% if recent_writing %}
-  <ol class="entry-list">
+  <ul class="post-list">
     {% for post in recent_writing %}
-    <li class="entry">
-      <div class="entry-meta"><span class="type">{{ post.kind }}</span><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time></div>
-      <div><a class="entry-title" href="/{{ post.slug }}/">{{ post.title }}</a><p class="entry-description">{{ post.description }}</p></div>
-      <div class="entry-arrow" aria-hidden="true">↗</div>
+    <li class="post-row">
+      <div class="post-meta"><span class="kind">{{ post.kind }}</span><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time></div>
+      <div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div>
     </li>
     {% endfor %}
-  </ol>
-  {% else %}<p>No writing published yet.</p>{% endif %}
-</section>
-
-<section class="section" id="notes" aria-labelledby="notes-title">
-  <div class="section-heading"><span>02</span><h2 id="notes-title">Notes & links</h2></div>
-  {% if notes %}
-  <ol class="entry-list">
-    {% for post in notes %}
-    <li class="entry">
-      <div class="entry-meta"><span class="type">{{ post.kind }}</span><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time></div>
-      <div><a class="entry-title" href="/{{ post.slug }}/">{{ post.title }}</a><p class="entry-description">{{ post.description }}</p></div>
-      <div class="entry-arrow" aria-hidden="true">↗</div>
-    </li>
-    {% endfor %}
-  </ol>
-  {% else %}<p>Notes will appear here.</p>{% endif %}
-  <div class="labels" aria-label="Topics">
-    <span class="label">visual language</span><span class="label">machine learning</span><span class="label">VQA</span><span class="label">reading notes</span>
-  </div>
-</section>
-
-<section class="section" id="projects" aria-labelledby="projects-title">
-  <div class="section-heading"><span>03</span><h2 id="projects-title">Small projects</h2></div>
-  {% if site.projects %}
-  <div class="shelf">
-    {% for project in site.projects %}
-    <div class="shelf-item"><a href="{{ project.url }}">{{ project.title }} ↗</a><p>{{ project.description }}</p></div>
-    {% endfor %}
-    <div class="shelf-item"><a href="/feed.xml">Reading feed ↗</a><p>A quiet RSS feed for new writing and notes.</p></div>
-  </div>
+  </ul>
   {% endif %}
+
+  <div class="mini-links" aria-label="Quick links">
+    <a class="mini-link" href="#posts">all posts ↘</a>
+    <a class="mini-link" href="#placeholder-reading">reading list ↘</a>
+    <a class="mini-link" href="#placeholder-media">my media ↘</a>
+    <a class="mini-link" href="/feed.xml">RSS feed ↗</a>
+  </div>
+
+  <h2 id="posts">recent posts / notes / links</h2>
+  {% if notes %}
+  <ul class="post-list">
+    {% for post in notes %}
+    <li class="post-row">
+      <div class="post-meta"><span class="kind">{{ post.kind }}</span><time datetime="{{ post.date.isoformat() }}">{{ post.date_label }}</time></div>
+      <div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <div class="home-lower">
+    <div class="lower-card" id="placeholder-reading">
+      <pre class="ascii-art" aria-hidden="true"> .-.
+( R )
+ '-'</pre>
+      <strong>reading / watching</strong>
+      <p>placeholder shelf for papers, films and pages I want to remember.</p>
+    </div>
+    <div class="lower-card" id="placeholder-media">
+      <pre class="ascii-art" aria-hidden="true"> .--.
+( &gt; )
+ '--'</pre>
+      <strong>now playing</strong>
+      <p>placeholder for music, audio notes and the occasional loop.</p>
+    </div>
+  </div>
 </section>
 {% endblock %}
