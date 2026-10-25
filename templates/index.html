@@ -1,42 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="hero" id="about">
-  <div>
-    <p class="eyebrow">hello, internet friend ✦</p>
-    <h1>A soft little home for <span>serious ideas.</span></h1>
-    <p>{{ site.bio }}</p>
-    <div class="hero-actions"><a class="pill primary" href="#writing">read the latest →</a><a class="pill" href="#notes">wander through notes</a></div>
-  </div>
-  <div class="ascii-wrap" aria-label="A smiling computer with a cup of tea">
-    <div><pre class="ascii-art">      .-''''-.
-    .'  .--.  '.
-   /   (◕‿◕)   \
-  |   .-====-.   |
-  |  |  HELLO |  |
-  |  |  MIRAJ |  |
-  |   '-.____.-'  |
-   \    /|  |\   /
-    '._/ |  | \_.'
-      (__) (__)
-       ╰─╯ ╰─╯</pre><p class="ascii-caption">a tiny computer says hi</p></div>
-  </div>
-</section>
+<div class="room-heading" id="about"><div><h1 class="room-title">{{ site.title }}</h1><span class="room-subtitle">welcome to my pink mini-hompy ☆</span></div><span class="room-address">mymirajane.github.io</span></div>
 
-<div class="section-heading" id="writing"><h2>recent writing ✎</h2><span>{{ recent_writing|length }} little essays</span></div>
-<div class="post-grid">
-{% for post in recent_writing %}
-  <a class="post-card" href="/{{ post.slug }}/"><div class="meta">{{ post.date_label }} · {{ post.reading_minutes }} min</div><h3>{{ post.title }}</h3><p>{{ post.description }}</p>{% if post.tags %}<div class="tag-row">{% for tag in post.tags %}<span class="tag">#{{ tag }}</span>{% endfor %}</div>{% endif %}</a>
+<div class="section-heading"><span>Recent Updates</span><small>diary 5/14 · posts 9/18</small></div>
+<div class="updates" id="writing">
+  {% for post in writings[:3] %}
+  <div class="update"><b>{{ post.kind|upper }}</b><a href="/{{ post.slug }}/">{{ post.title }}</a><span>{{ post.date_label }}</span></div>
+  {% endfor %}
+  {% for post in notes[:1] %}
+  <div class="update"><b>NOTE</b><a href="/{{ post.slug }}/">{{ post.title }}</a><span>{{ post.date_label }}</span></div>
+  {% endfor %}
+</div>
+
+<div class="tabs-row"><a class="active" href="#minilife">Minilife</a> &nbsp;|&nbsp; <a href="#posts">Miniblog</a> &nbsp;|&nbsp; <a href="#notes">Storyroom</a></div>
+<figure class="minilife" id="minilife"><pre>╭──────────────────────────────────────────────╮
+│          MIRAJANE'S PINK STUDY ROOM          │
+│                                              │
+│   ┌─────────┐                 ┌──────────┐   │
+│   │  window │      ______     │  books   │   │
+│   │  o  o   │     | desk |    │  notes   │   │
+│   │    ☼    │     |______|    └──────────┘   │
+│   └─────────┘       ╭────╮       ╭────╮      │
+│       ♡♡♡           │lamp│       │plant│     │
+│_____________________|____|_______|_____|______│
+│       images + math + little uncertainties    │
+╰──────────────────────────────────────────────╯</pre><figcaption>my minilife · a quiet room for reports, proofs, and links</figcaption></figure>
+
+<h2 id="posts">Recent writing</h2>
+<ul class="post-list">
+{% for post in writings %}
+  <li class="post-row"><time datetime="{{ post.date.isoformat() }}"><b>{{ post.kind }}</b>{{ post.date_label }}</time><div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div></li>
 {% else %}
-  <p>No writing yet. Add a Markdown file to <code>content/</code> and run <code>python build.py</code>.</p>
+  <li class="post-row"><div><p>No writing yet. Add a Markdown file to <code>content/</code>.</p></div></li>
 {% endfor %}
-</div>
+</ul>
 
-<div class="section-heading" id="notes"><h2>notes &amp; links ♡</h2><span>small things, often useful</span></div>
-<div class="two-col">
-  <div class="note-card mint"><h3>currently thinking about</h3><p>How uncertainty can make a model more honest, and how a diagram can make a proof feel friendly.</p><ul class="tiny-list"><li>Bayesian neural networks</li><li>visual question answering</li><li>probability, but cozy</li></ul></div>
-  <div class="note-card"><h3>the little shelf</h3><p>Some saved pages, papers, and other internet treasures.</p><ul class="tiny-list">{% for post in notes[:4] %}<li><a href="/{{ post.slug }}/">{{ post.title }}</a></li>{% else %}<li>More links soon ✦</li>{% endfor %}</ul></div>
-</div>
+<h2 id="notes">Notes &amp; links</h2>
+<ul class="post-list">
+{% for post in notes %}
+  <li class="post-row"><time datetime="{{ post.date.isoformat() }}"><b>{{ post.kind }}</b>{{ post.date_label }}</time><div><a href="/{{ post.slug }}/">{{ post.title }}</a><p>{{ post.description }}</p></div></li>
+{% else %}
+  <li class="post-row"><div><p>The storyroom is waiting for a new note.</p></div></li>
+{% endfor %}
+</ul>
 
-<div class="section-heading"><h2>public notebook map</h2><span>choose a door</span></div>
-<div class="hero-actions"><a class="pill" href="#writing">✿ technical writing</a><a class="pill" href="#notes">☁ notes and links</a><a class="pill" href="/feed.xml">☕ rss feed</a></div>
+<div class="chips"><a href="#posts">all posts</a><a href="#notes">reading list</a><a href="/feed.xml">rss feed</a><a href="#about">profile</a></div>
 {% endblock %}

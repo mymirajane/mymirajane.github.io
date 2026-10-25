@@ -228,6 +228,7 @@ def build() -> None:
             description=SITE["description"],
             canonical=SITE["url"].rstrip("/") + "/",
             recent_writing=writings,
+            writings=writings,
             notes=notes,
             posts=posts,
         ),

@@ -8,60 +8,85 @@
   <link rel="canonical" href="{{ canonical }}">
   <title>{% if page_title %}{{ page_title }} · {% endif %}{{ site.title }}</title>
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="/feed.xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css">
+
+  <!-- MathJax keeps LaTeX in Markdown posts working. -->
   <script>
     window.MathJax = {tex: {inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]'], ['$$', '$$']]}, svg: {fontCache: 'global'}};
   </script>
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <!-- Prism keeps fenced CS code blocks readable. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css">
+
   <style>
-    :root{--ink:#433d58;--muted:#7d7794;--pink:#ff86aa;--pink-dark:#e65c8b;--lav:#bca7f6;--mint:#b9ecd9;--sky:#bfe8ff;--butter:#fff0ad;--cream:#fffaf6;--line:#eadff2;--white:#fff}
+    :root{--ink:#51414a;--muted:#8c737b;--pink:#e88fa7;--pink-dark:#c96582;--pink-pale:#fde8ee;--rose:#f6c4d1;--cream:#fffdf8;--paper:#fffefa;--line:#d8bdc5;--blue:#6a8798;--green:#9ab9a6}
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;min-height:100vh;color:var(--ink);font:16px/1.7 "Nunito",ui-rounded,"Trebuchet MS",sans-serif;background:#f7efff;background-image:radial-gradient(#e5d4f2 1px,transparent 1px);background-size:18px 18px}
-    a{color:#9359c8;text-decoration:none;transition:color .18s ease,transform .18s ease}
-    a:hover{color:var(--pink-dark);transform:translateY(-2px)}
-    a:focus-visible{outline:3px solid var(--butter);outline-offset:3px}
-    .skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:.5rem;z-index:10;background:var(--white);padding:.35rem .6rem;border-radius:999px}
-    .site-shell{width:min(calc(100% - 2rem),1000px);margin:2rem auto;padding:1.15rem;border:3px solid #735a99;border-radius:32px;background:rgba(255,250,246,.86);box-shadow:0 12px 0 #d6c4e7,0 24px 40px rgba(97,70,130,.15);position:relative;overflow:hidden}
-    .site-shell:before,.site-shell:after{content:"✦";position:absolute;color:var(--pink);font-size:2.2rem;animation:sparkle 2.8s ease-in-out infinite}.site-shell:before{right:6%;top:1.4rem}.site-shell:after{left:3%;bottom:1.8rem;color:var(--lav);animation-delay:1.1s}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.45rem .65rem 1rem;border-bottom:2px dashed var(--line)}
-    .brand{display:inline-flex;align-items:center;gap:.55rem;color:var(--ink);font-weight:900;font-size:1.35rem;letter-spacing:-.03em}.brand-mark{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:50%;background:var(--butter);border:2px solid #e0be4e;animation:floaty 4s ease-in-out infinite}.brand small{display:block;color:var(--muted);font:11px/1.2 "DM Mono",monospace;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
-    .main-nav{display:flex;flex-wrap:wrap;gap:.8rem;font-size:.9rem;font-weight:800}.main-nav a{padding:.2rem .45rem;border-radius:999px}.main-nav a:hover{background:#fce2ef}
-    .content{position:relative;z-index:1;padding:1.35rem .7rem .55rem}.hero{display:grid;grid-template-columns:minmax(0,1fr) 260px;align-items:center;gap:1rem;padding:1.4rem;border:2px solid #ead5f2;border-radius:25px;background:linear-gradient(135deg,#fffdf8,#f3edff)}
-    .eyebrow{margin:0;color:var(--pink-dark);font:500 12px/1.3 "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase}.hero h1{margin:.25rem 0 .45rem;font-size:clamp(2rem,5vw,3.4rem);line-height:1.05;letter-spacing:-.06em}.hero h1 span{color:#9a65d1}.hero p{margin:.35rem 0;color:var(--muted)}.hero-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem}.pill{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem .85rem;border:2px solid #8e6eac;border-radius:999px;background:var(--white);font-weight:800}.pill.primary{border-color:var(--pink-dark);background:var(--pink);color:#fff}.pill:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 4px 0 #e5c7df}
-    .ascii-wrap{display:grid;place-items:center;min-height:205px;padding:.8rem;border:2px solid #b5d9ef;border-radius:25px;background:var(--sky);transform:rotate(1.5deg);animation:floaty 5s ease-in-out infinite}.ascii-art{margin:0;color:#4d638c;font:14px/1.12 "DM Mono",monospace;white-space:pre;text-align:center}.ascii-caption{margin:.45rem 0 0;color:#5f78a0;font-size:.75rem;font-weight:800;text-align:center}
-    .section-heading{display:flex;justify-content:space-between;align-items:baseline;gap:.8rem;margin:1.65rem 0 .6rem}.section-heading h2{margin:0;font-size:1.45rem;letter-spacing:-.04em}.section-heading span{color:var(--muted);font:11px "DM Mono",monospace}
-    .post-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}.post-card{display:block;padding:1rem 1.05rem;border:2px solid var(--line);border-radius:20px;background:var(--white);box-shadow:0 4px 0 #f1e6f1;transition:transform .2s ease,box-shadow .2s ease}.post-card:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 9px 0 #e7d3eb}.post-card .meta{color:var(--pink-dark);font:11px "DM Mono",monospace;text-transform:uppercase}.post-card h3{margin:.25rem 0 .25rem;color:var(--ink);font-size:1.1rem;line-height:1.25}.post-card p{margin:0;color:var(--muted);font-size:.9rem}.tag-row{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.7rem}.tag{padding:.1rem .45rem;border-radius:999px;background:#eefbed;color:#42846e;font:11px "DM Mono",monospace}
-    .two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:.8rem;margin-top:1rem}.note-card{padding:1rem;border:2px dashed #c6b3e8;border-radius:20px;background:#fbf7ff}.note-card.mint{border-color:#9ddac4;background:#f2fffa}.note-card h3{margin:0 0 .2rem;font-size:1.05rem}.note-card p{margin:.2rem 0;color:var(--muted);font-size:.9rem}.tiny-list{margin:.55rem 0 0;padding-left:1.1rem;color:var(--muted);font-size:.9rem}.tiny-list li::marker{color:var(--pink)}
-    .article{max-width:760px;margin:0 auto}.article-kicker{color:var(--pink-dark);font:12px "DM Mono",monospace;text-transform:uppercase}.article h1{margin:.25rem 0 .45rem;font-size:clamp(2rem,5vw,3rem);line-height:1.1;letter-spacing:-.05em}.lede{margin:0;color:var(--muted);font-size:1.08rem}.article-meta{display:flex;flex-wrap:wrap;gap:.65rem;margin:1rem 0;padding:.55rem 0;border-block:2px dashed var(--line);color:var(--muted);font:11px "DM Mono",monospace}.post-body{font-size:1.03rem}.post-body h2,.post-body h3{margin-top:1.5rem;line-height:1.2}.post-body blockquote{margin:1rem 0;padding:.7rem 1rem;border-left:4px solid var(--pink);border-radius:0 16px 16px 0;background:#fff0f5;color:#725a72}.post-body img{max-width:100%;border-radius:18px}.post-body table{width:100%;border-collapse:collapse;font-size:.9rem}.post-body th,.post-body td{padding:.45rem;border:1px solid var(--line);text-align:left}.post-body th{background:#f3edff}.post-body pre[class*=language-]{margin:1rem 0;padding:1rem;border:2px solid #d6c6ef;border-radius:18px;background:#29263d;box-shadow:0 5px 0 #e1d5ef;overflow:auto}.post-body code:not([class*=language-]){padding:.12rem .35rem;border-radius:7px;background:#fff0ad;color:#6d4f73;font: .9em "DM Mono",monospace}.post-body .katex-display{overflow-x:auto;overflow-y:hidden;padding:.55rem;border-radius:15px;background:#f4f9ff}.article-end{display:flex;justify-content:space-between;margin-top:1.5rem;padding-top:.8rem;border-top:2px dashed var(--line);font-weight:800}
-    .site-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.8rem;margin-top:1.1rem;padding:.85rem .7rem 0;border-top:2px dashed var(--line);color:var(--muted);font-size:.82rem}.site-footer a{margin-left:.7rem}
-    @keyframes floaty{0%,100%{transform:translateY(0) rotate(1.5deg)}50%{transform:translateY(-7px) rotate(-1deg)}}@keyframes sparkle{0%,100%{opacity:.35;transform:scale(.8) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(18deg)}}@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(2deg)}75%{transform:rotate(-2deg)}}
-    @media(max-width:720px){.site-shell{width:calc(100% - 1rem);margin:1rem auto;padding:.75rem;border-radius:24px}.topbar{align-items:flex-start;flex-direction:column}.hero{grid-template-columns:1fr}.ascii-wrap{min-height:170px}.post-grid,.two-col{grid-template-columns:1fr}.main-nav{gap:.35rem}.content{padding-inline:.2rem}.ascii-art{font-size:12px}}
+    body{margin:0;min-height:100vh;overflow-x:hidden;color:var(--ink);font:14px/1.55 Arial,Tahoma,"Dotum",sans-serif;background-color:#f8d9e3;background-image:linear-gradient(rgba(186,117,137,.25) 1px,transparent 1px),linear-gradient(90deg,rgba(186,117,137,.25) 1px,transparent 1px);background-size:18px 18px}
+    a{color:#b35375;text-decoration:none}a:hover{color:#8e395b;text-decoration:underline}a:focus-visible{outline:2px dotted var(--pink-dark);outline-offset:3px}
+    .skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:.5rem;z-index:9;padding:.3rem .55rem;border:1px solid var(--pink-dark);background:var(--paper)}
+    .page{width:min(calc(100% - 120px),1040px);margin:34px auto 20px}
+    .mini-hompy{position:relative;padding:14px 14px 13px;border:1px solid #9b707d;border-radius:18px;background:#eee6e3;outline:1px dashed #c08e9b;outline-offset:5px}
+    .pane-layout{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:690px}
+    .pane{position:relative;background:var(--paper);border:1px solid var(--line)}
+    .profile-pane{padding:13px 14px;border-radius:13px 0 0 13px;border-right:0}
+    .content-pane{min-width:0;padding:20px 27px 24px 34px;border-radius:0 13px 13px 0}
+    .profile-counter{padding:0 2px 8px;border-bottom:1px dotted var(--line);color:var(--muted);font:10px/1.3 Tahoma,Arial,sans-serif;text-transform:uppercase}.profile-counter b{color:var(--pink-dark)}
+    .profile-photo{display:grid;place-items:center;aspect-ratio:1;margin:15px 7px 12px;border:1px solid #d8c3c7;background:#fff7f7}.profile-photo pre{margin:0;color:#936472;font:12px/1.1 "Courier New",monospace;white-space:pre}
+    .profile-name{margin:0;color:#aa5c76;text-align:center;font:bold 25px/1.1 Arial,Tahoma,sans-serif}.profile-handle{margin:5px 0 11px;color:var(--muted);text-align:center;font:11px/1.4 Tahoma,Arial,sans-serif}.profile-bio{margin:0 2px;color:#79666d;text-align:center;line-height:1.65}
+    .profile-menu{margin-top:16px;border-top:1px dotted var(--line)}.profile-menu a{display:block;padding:6px 4px;border-bottom:1px dotted var(--line);color:#846772;font:12px Tahoma,Arial,sans-serif}.profile-menu a:hover{background:var(--pink-pale);text-decoration:none}
+    .profile-tools{margin-top:18px;padding-top:10px;border-top:1px dotted var(--line)}.profile-tools label{display:block;margin:0 0 4px;color:var(--muted);font:10px Tahoma,Arial,sans-serif;text-transform:uppercase}.profile-tools input,.profile-tools select{width:100%;padding:5px;border:1px solid #c8adb5;background:#fff;color:var(--ink);font:12px Arial,Tahoma,sans-serif}.profile-tools select{margin-top:9px}
+    .spine{position:absolute;z-index:3;top:82px;bottom:82px;left:253px;width:28px}.spine:before{content:"";position:absolute;left:13px;top:0;bottom:0;border-left:1px dashed #b3929b}.ring{position:absolute;left:3px;width:22px;height:13px;border:2px solid #a88791;border-radius:50%;background:#f0e8e5}.ring:nth-child(1){top:8%}.ring:nth-child(2){top:47%}.ring:nth-child(3){top:86%}
+    .room-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}.room-title{margin:0;color:#a95170;font:bold 24px/1.2 Arial,Tahoma,sans-serif}.room-subtitle{color:var(--muted);font:10px Tahoma,Arial,sans-serif;letter-spacing:.09em;text-transform:uppercase}.room-address{color:#9a7d84;font:10px "Courier New",monospace;white-space:nowrap}
+    .section-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0;padding:7px 0 5px;border-bottom:1px solid var(--line);color:#ad5f77;font:bold 14px Arial,Tahoma,sans-serif}.section-heading small{color:var(--muted);font:10px Tahoma,Arial,sans-serif;font-weight:normal}
+    .updates{margin-bottom:10px;border-bottom:1px dotted var(--line)}.update{display:grid;grid-template-columns:68px minmax(0,1fr) 112px;gap:9px;padding:6px 0;border-bottom:1px dotted #e2ced3;font-size:12px}.update:last-child{border-bottom:0}.update b{color:var(--pink-dark);font:11px Tahoma,Arial,sans-serif}.update span{color:#a18a91;font:10px Tahoma,Arial,sans-serif;text-align:right;white-space:nowrap}
+    .tabs-row{margin-top:11px;padding:6px 0;border-bottom:1px solid var(--line);color:var(--muted);font-size:12px}.tabs-row .active{color:var(--pink-dark);font-weight:bold}
+    .minilife{margin:7px 0 0;padding:14px;border:1px solid #d9c3c8;background:#fbf4f1;text-align:center}.minilife pre{margin:0;color:#8b6974;font:12px/1.15 "Courier New",monospace;white-space:pre;overflow:auto}.minilife figcaption{margin-top:7px;color:var(--muted);font:10px Tahoma,Arial,sans-serif}
+    .content-pane h2{margin:18px 0 5px;padding:0 0 5px;border-bottom:2px solid #e2cbd1;color:#ad5f77;font:bold 16px Arial,Tahoma,sans-serif}.post-list{margin:0;padding:0;list-style:none}.post-row{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px;padding:7px 0;border-bottom:1px dotted var(--line)}.post-row time{color:#a18a91;font:10px/1.35 Tahoma,Arial,sans-serif}.post-row time b{display:block;color:var(--pink-dark);text-transform:uppercase}.post-row a{font-weight:bold}.post-row p{margin:2px 0 0;color:#796970;font-size:11px}.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}.chips a{padding:4px 7px;border:1px solid #d5bdc5;background:#fffafb;color:#8f6070;font:10px Tahoma,Arial,sans-serif}.chips a:hover{background:var(--pink-pale);text-decoration:none}
+    .article{max-width:780px;margin:0 auto}.article-kicker{color:var(--pink-dark);font:10px Tahoma,Arial,sans-serif;text-transform:uppercase}.article h1{margin:4px 0 6px;color:#a95170;font:bold 25px/1.2 Arial,Tahoma,sans-serif}.article .lede{margin:0;color:var(--muted)}.article-meta{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0 9px;padding:7px 0;border-block:1px dotted var(--line);color:var(--muted);font:10px Tahoma,Arial,sans-serif}.post-body{padding-top:5px;font:16px/1.8 Georgia,"Times New Roman",serif}.post-body h2,.post-body h3{font-family:Arial,Tahoma,sans-serif;color:#a95170;line-height:1.3}.post-body img{max-width:100%;height:auto}.post-body blockquote{margin:12px 0;padding:6px 10px;border-left:3px solid var(--pink);background:#fff1f4;color:#735a63}.post-body table{width:100%;border-collapse:collapse;font:13px Arial,Tahoma,sans-serif}.post-body th,.post-body td{padding:6px;border:1px solid var(--line);text-align:left}.post-body th{background:var(--pink-pale)}.post-body pre[class*=language-]{overflow:auto;margin:12px 0;padding:10px;border:1px solid #b99aa5;background:#fff5f6;font:12px/1.5 "Courier New",monospace}.post-body code:not([class*=language-]){padding:1px 4px;background:#fff0c2;color:#75525e;font:13px "Courier New",monospace}.article-end{display:flex;justify-content:space-between;margin-top:17px;padding-top:8px;border-top:1px solid var(--line);font:11px Tahoma,Arial,sans-serif}
+    .side-tabs{position:absolute;z-index:4;right:-69px;top:92px;display:flex;flex-direction:column;gap:4px;width:78px}.side-tabs a{padding:8px 3px;border:1px solid #a55d73;border-radius:3px 5px 5px 3px;background:#d9839a;color:#fff;text-align:center;font:11px Tahoma,Arial,sans-serif}.side-tabs a:hover{background:#b95d78;text-decoration:none}.side-tabs small{display:block;margin-top:1px;font:9px Arial,sans-serif}
+    .footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:12px;padding:9px 4px 0;border-top:1px solid var(--line);color:#927b83;font:10px Tahoma,Arial,sans-serif}.footer a{margin-left:10px}
+    @media(max-width:760px){.page{width:calc(100% - 12px);margin:10px auto}.mini-hompy{padding:9px}.pane-layout{grid-template-columns:1fr}.profile-pane,.content-pane{border:1px solid var(--line);border-radius:12px}.content-pane{padding:16px}.spine{display:none}.side-tabs{position:static;display:grid;grid-template-columns:repeat(4,1fr);width:auto;margin-top:8px}.side-tabs a{border-radius:4px}.room-heading{display:block}.room-address{display:block;margin-top:3px}.update{grid-template-columns:58px minmax(0,1fr)}.update span{display:none}}
+    @media(max-width:480px){.profile-pane{display:grid;grid-template-columns:115px minmax(0,1fr);gap:5px 10px}.profile-counter,.profile-menu,.profile-tools{grid-column:1/-1}.profile-photo{grid-row:span 2;margin:4px}.profile-name,.profile-handle,.profile-bio{text-align:left}.post-row{grid-template-columns:60px minmax(0,1fr)}.post-body{font-size:15px}}
   </style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <div class="site-shell">
-    <header class="topbar">
-      <a class="brand" href="/"><span class="brand-mark">✿</span><span>mira's tiny web<small>cs · math · statistics · good links</small></span></a>
-      <nav class="main-nav" aria-label="Main navigation"><a href="/">home</a><a href="/#writing">writing</a><a href="/#notes">notes</a><a href="/#about">about</a><a href="/feed.xml">rss</a></nav>
-    </header>
-    <main class="content" id="main">
-      {% block content %}
-      <article class="article">
-        <div class="article-kicker">{{ post.kind }} · {{ post.date_label }}</div>
-        <h1>{{ post.title }}</h1>
-        <p class="lede">{{ post.description }}</p>
-        <div class="article-meta"><span>{{ site.author }}</span><span>{{ post.reading_minutes }} min read</span>{% for tag in post.tags %}<span>#{{ tag }}</span>{% endfor %}</div>
-        <div class="post-body">{{ content|safe }}</div>
-        <div class="article-end"><a href="/">← back home</a><a href="/feed.xml">rss ↗</a></div>
-      </article>
-      {% endblock %}
-    </main>
-    <footer class="site-footer"><span>© {{ year }} {{ site.author }} · made with Markdown + tiny spells</span><span><a href="/feed.xml">RSS</a>{% for link in site.social_links %}<a href="{{ link.url }}">{{ link.name }}</a>{% endfor %}</span></footer>
+  <div class="page">
+    <section class="mini-hompy">
+      <div class="pane-layout">
+        <aside class="pane profile-pane" id="profile">
+          <div class="profile-counter">today <b>12</b> &nbsp;|&nbsp; total <b>1024</b></div>
+          <div class="profile-photo" aria-label="ASCII art computer profile picture"><pre>      .-''''-.
+    .'  .--.  '.
+   /   (◕‿◕)   \
+  |   .-====-.   |
+  |  |  HELLO |  |
+  |  |  MIRAJ |  |
+  |   '-.____.-'  |
+   \    /|  |\   /
+    '._/ |  | \_.'
+      (__) (__)
+       ╰─╯ ╰─╯</pre></div>
+          <div><h1 class="profile-name">Mirajane</h1><p class="profile-handle">@mymirajane · CS / Math / Stats</p><p class="profile-bio">{{ site.bio }}</p></div>
+          <nav class="profile-menu" aria-label="Profile links"><a href="/#about">› profile</a><a href="/#writing">› diary</a><a href="/#notes">› notes</a><a href="/feed.xml">› rss feed</a></nav>
+          <div class="profile-tools"><label for="search">search my room</label><input id="search" type="search" placeholder="type a title..."><select aria-label="Choose a shelf"><option>choose a page</option><option>recent writing</option><option>notes and links</option><option>about me</option></select></div>
+        </aside>
+        <main class="pane content-pane" id="main">
+          {% block content %}
+          <article class="article">
+            <div class="room-heading"><div><h1 class="room-title">{{ site.title }}</h1><span class="room-subtitle">mirajane's pink mini-hompy</span></div><span class="room-address">https://mymirajane.github.io/</span></div>
+            <div class="article-kicker">{{ post.kind }} · {{ post.date_label }}</div><h1>{{ post.title }}</h1><p class="lede">{{ post.description }}</p>
+            <div class="article-meta"><span>{{ site.author }}</span><span>{{ post.reading_minutes }} min read</span>{% for tag in post.tags %}<span>#{{ tag }}</span>{% endfor %}</div>
+            <div class="post-body">{{ content|safe }}</div>
+            <div class="article-end"><a href="/">← home</a><a href="/feed.xml">rss ↗</a></div>
+          </article>
+          {% endblock %}
+        </main>
+      </div>
+      <div class="spine" aria-hidden="true"><i class="ring"></i><i class="ring"></i><i class="ring"></i></div>
+      <nav class="side-tabs" aria-label="Mini-hompy navigation"><a href="/">Home<small>홈</small></a><a href="/#writing">Writing<small>일기</small></a><a href="/#notes">Notes<small>게시판</small></a><a href="/#about">About<small>프로필</small></a><a href="/feed.xml">RSS<small>링크</small></a></nav>
+    </section>
+    <footer class="footer"><span>© {{ year }} {{ site.author }} · pink room open</span><span><a href="/feed.xml">RSS</a>{% for link in site.social_links %}<a href="{{ link.url }}">{{ link.name }}</a>{% endfor %}</span></footer>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
